@@ -47,5 +47,6 @@ public class CadastroRestauranteService {
 			throw new EntidadeEmUsoException(
 					String.format("Restaurante de código %d não pode ser removida, pois está em uso", restauranteId));
 		}
+		
 	}
 }

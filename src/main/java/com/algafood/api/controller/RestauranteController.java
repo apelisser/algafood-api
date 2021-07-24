@@ -50,8 +50,8 @@ public class RestauranteController {
 	public ResponseEntity<?> adicionar(@RequestBody Restaurante restaurante) {
 		try {
 			restaurante = cadastroRestaurante.salvar(restaurante);
-
 			return ResponseEntity.status(HttpStatus.CREATED).body(restaurante);
+			
 		} catch (EntidadeNaoEncontradaException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
