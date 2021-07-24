@@ -25,7 +25,6 @@ import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.repository.RestauranteRepository;
 import com.algafood.domain.service.CadastroRestauranteService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 
 @RestController
 @RequestMapping(value = "/restaurantes")
@@ -114,20 +113,15 @@ public class RestauranteController {
 	}
 
 	private void merge(Map<String, Object> dadosOrigem, Restaurante restauranteDestino) {
-		try {
+		ObjectMapper objectMapper = new ObjectMapper();
+		Restaurante restauranteOrigem = objectMapper.convertValue(dadosOrigem, Restaurante.class);
 
-			ObjectMapper objectMapper = new ObjectMapper();
-			Restaurante restauranteOrigem = objectMapper.convertValue(dadosOrigem, Restaurante.class);
-
-			dadosOrigem.forEach((chave, valor) -> {
-				Field field = ReflectionUtils.findField(Restaurante.class, chave);
-				field.setAccessible(true);
-				Object novoValor = ReflectionUtils.getField(field, restauranteOrigem);
-				ReflectionUtils.setField(field, restauranteDestino, novoValor);
-			});
-		} catch (UnrecognizedPropertyException e) {
-			System.out.println("Erro na conversão: " + e.getMessage());
-		}
+		dadosOrigem.forEach((chave, valor) -> {
+			Field field = ReflectionUtils.findField(Restaurante.class, chave);
+			field.setAccessible(true);
+			Object novoValor = ReflectionUtils.getField(field, restauranteOrigem);
+			ReflectionUtils.setField(field, restauranteDestino, novoValor);
+		});
 	}
 
 }
