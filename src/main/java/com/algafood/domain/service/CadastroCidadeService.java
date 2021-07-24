@@ -11,7 +11,6 @@ import com.algafood.domain.model.Cidade;
 import com.algafood.domain.model.Estado;
 import com.algafood.domain.repository.CidadeRepository;
 import com.algafood.domain.repository.EstadoRepository;
-import com.algafood.domain.repository.RestauranteRepository;
 
 @Service
 public class CadastroCidadeService {
