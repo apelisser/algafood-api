@@ -1,6 +1,7 @@
 package com.algafood.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,14 +34,14 @@ public class CidadeController {
 
 	@GetMapping
 	public List<Cidade> listar() {
-		return cidadeRepository.listar();
+		return cidadeRepository.findAll();
 	}
 
 	@GetMapping("/{cidadeId}")
 	public ResponseEntity<Cidade> buscar(@PathVariable Long cidadeId) {
-		Cidade cidade = cidadeRepository.buscar(cidadeId);
-		if (cidade != null) {
-			return ResponseEntity.ok(cidade);
+		Optional<Cidade> cidade = cidadeRepository.findById(cidadeId);
+		if (cidade.isPresent()) {
+			return ResponseEntity.ok(cidade.get());
 		}
 
 		return ResponseEntity.notFound().build();
@@ -59,12 +60,14 @@ public class CidadeController {
 
 	@PutMapping("/{cidadeId}")
 	public ResponseEntity<?> atualizar(@PathVariable Long cidadeId, @RequestBody Cidade cidade) {
-		Cidade cidadeAtual = cidadeRepository.buscar(cidadeId);
+		Optional<Cidade> cidadeAtual = cidadeRepository.findById(cidadeId);
 
 		if (cidadeAtual != null) {
 			try {
-				BeanUtils.copyProperties(cidade, cidadeAtual, "id");
-				cidadeAtual = cadastroCidade.salvar(cidadeAtual);
+				BeanUtils.copyProperties(cidade, cidadeAtual.get(), "id");
+				
+				Cidade cidadeSalva = cadastroCidade.salvar(cidadeAtual.get());
+				return ResponseEntity.ok(cidadeSalva);
 
 			} catch (EntidadeNaoEncontradaException e) {
 				return ResponseEntity.badRequest().body(e.getMessage());
@@ -78,11 +81,12 @@ public class CidadeController {
 	public ResponseEntity<Cidade> remover(@PathVariable Long cidadeId) {
 
 		try {
+			cadastroCidade.excluir(cidadeId);
 			return ResponseEntity.noContent().build();
-			
+
 		} catch (EntidadeNaoEncontradaException e) {
-			return   ResponseEntity.notFound().build();
-			
+			return ResponseEntity.notFound().build();
+
 		} catch (EntidadeEmUsoException e) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
