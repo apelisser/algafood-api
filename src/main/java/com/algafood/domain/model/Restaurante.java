@@ -14,6 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Restaurante {
 
@@ -30,6 +32,7 @@ public class Restaurante {
 	@JoinColumn(name = "cozinha_id")
 	private Cozinha cozinha;
 
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "restaurante_forma_pagamento"
 	, joinColumns = @JoinColumn(name = "restaurante_id")
@@ -66,6 +69,14 @@ public class Restaurante {
 
 	public void setCozinha(Cozinha cozinha) {
 		this.cozinha = cozinha;
+	}
+
+	public List<FormaPagamento> getFormasPagamento() {
+		return formasPagamento;
+	}
+
+	public void setFormasPagamento(List<FormaPagamento> formasPagamento) {
+		this.formasPagamento = formasPagamento;
 	}
 
 	@Override
