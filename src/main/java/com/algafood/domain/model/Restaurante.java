@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,6 +33,10 @@ public class Restaurante {
 	@JoinColumn(name = "cozinha_id")
 	private Cozinha cozinha;
 
+	@JsonIgnore
+	@Embedded
+	private Endereco endereco;
+	
 	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "restaurante_forma_pagamento"
@@ -77,6 +82,14 @@ public class Restaurante {
 
 	public void setFormasPagamento(List<FormaPagamento> formasPagamento) {
 		this.formasPagamento = formasPagamento;
+	}
+	
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
 	@Override
