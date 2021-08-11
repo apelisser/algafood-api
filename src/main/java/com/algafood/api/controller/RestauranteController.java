@@ -37,9 +37,19 @@ public class RestauranteController {
 	@Autowired
 	private CadastroRestauranteService cadastroRestaurante;
 
+//	@GetMapping
+//	public List<Restaurante> listar() {
+//		return restauranteRepository.findAll();
+//	}
+	
 	@GetMapping
 	public List<Restaurante> listar() {
-		return restauranteRepository.findAll();
+		List<Restaurante> restaurantes =  restauranteRepository.findAll();
+		
+		System.out.println("o nome da cozinha é: ");
+		System.out.println(restaurantes.get(0).getCozinha().getNome());
+		
+		return restaurantes;
 	}
 
 	@GetMapping("/{restauranteId}")
