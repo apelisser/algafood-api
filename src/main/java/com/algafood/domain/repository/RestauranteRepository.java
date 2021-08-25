@@ -18,7 +18,7 @@ public interface RestauranteRepository extends CustomJpaRepository<Restaurante, 
 	// (find, read, get, query) -> todos tem a mesma função
 
 	// query para fazer somente um select no banco
-	@Query("from Restaurante r join fetch r.cozinha left join fetch r.formasPagamento")
+	@Query("from Restaurante r join fetch r.cozinha")
 	List<Restaurante> findAll();
 	
 	List<Restaurante> queryByTaxaFreteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
