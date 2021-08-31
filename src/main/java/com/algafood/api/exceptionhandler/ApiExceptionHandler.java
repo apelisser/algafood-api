@@ -1,7 +1,5 @@
 package com.algafood.api.exceptionhandler;
 
-import java.time.LocalDateTime;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,39 +16,45 @@ import com.algafood.domain.exception.NegocioException;
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(EntidadeNaoEncontradaException.class)
-	public ResponseEntity<?> tratarEntidadeNaoEncontradaException(EntidadeNaoEncontradaException e, WebRequest request) {
-		return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+	public ResponseEntity<?> handleEntidadeNaoEncontradaException(EntidadeNaoEncontradaException e,
+			WebRequest request) {
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		ProblemType problemType = ProblemType.ENTIDADE_NAO_ENCONTRADA;
+		String detail = e.getMessage();
 		
-//		Problema problema = new Problema(e.getMessage(), LocalDateTime.now());
-//		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(problema);
+		Problem problem = createProblemBuilder(status, problemType, detail).build();
+		
+		return handleExceptionInternal(e, problem, new HttpHeaders(), status, request);
 	}
 
 	@ExceptionHandler(EntidadeEmUsoException.class)
-	public ResponseEntity<?> tratarEntidadeEmUsoException(EntidadeEmUsoException e, WebRequest request) {
+	public ResponseEntity<?> handleEntidadeEmUsoException(EntidadeEmUsoException e, WebRequest request) {
 		return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, request);
-		
-//		Problema problema = new Problema(e.getMessage(), LocalDateTime.now());
-//		return ResponseEntity.status(HttpStatus.CONFLICT).body(problema);
 	}
 
 	@ExceptionHandler(NegocioException.class)
-	public ResponseEntity<?> tratarNegocioException(NegocioException e, WebRequest request) {
+	public ResponseEntity<?> handleNegocioException(NegocioException e, WebRequest request) {
 		return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
-		
-//		Problema problema = new Problema(e.getMessage(), LocalDateTime.now());
-//		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problema);
 	}
-	
+
 	@Override
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
-		if (body == null) {			
-			body = new Problema(status.getReasonPhrase(), LocalDateTime.now());
+		if (body == null) {
+			body = new Problem(status.value(), status.getReasonPhrase());
 		} else if (body instanceof String) {
-			body = new Problema((String) body, LocalDateTime.now());
+			body = new Problem(status.value(), (String) body);
 		}
-		
+
 		return super.handleExceptionInternal(ex, body, headers, status, request);
+	}
+
+	private Problem.ProblemBuilder createProblemBuilder(HttpStatus status, ProblemType problemType, String detail) {
+		return Problem.builder()
+				.status(status.value())
+				.type(problemType.getUri())
+				.title(problemType.getTitle())
+				.detail(detail);
 	}
 
 }
