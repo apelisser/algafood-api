@@ -9,7 +9,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -26,6 +25,9 @@ import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
+
+	private static final String MSG_ERRO_GENERICA_USUARIO_FINAL = "Ocorreu um erro interno inesperado no sistema. "
+			+ "Tente novamente e se o problema persistir, entre em contato com o administrador do sistema.";
 
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
@@ -62,10 +64,10 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		ProblemType problemType = ProblemType.RECURSO_NAO_ENCONTRADO;
 		String detail = String.format("O recurso %s, que você tentou acessar, é inexistente.", ex.getRequestURL());
 		Problem problem = createProblemBuilder(status, problemType, detail).build();
-		
+
 		return handleExceptionInternal(ex, problem, headers, status, request);
 	}
-	
+
 	private ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		ProblemType problemType = ProblemType.PARAMETRO_INVALIDO;
@@ -86,7 +88,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 				"A propriedade '%s' recebeu o valor '%s', que é de um tipo diferente do esperado. "
 						+ "Corrija e informe um valor compatível com o tipo '%s'.",
 				path, ex.getValue(), ex.getTargetType().getSimpleName());
-		Problem problem = createProblemBuilder(status, problemType, detail).build();
+		Problem problem = createProblemBuilder(status, problemType, detail)
+				.userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL)
+				.build();
 
 		return handleExceptionInternal(ex, problem, headers, status, request);
 	}
@@ -97,7 +101,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		ProblemType problemType = ProblemType.MENSAGEM_IMCOMPREENSIVEL;
 		String detail = String
 				.format("A propriedade '%s' não existe. Corrija ou remova essa propriedade e tente novamente.", path);
-		Problem problem = createProblemBuilder(status, problemType, detail).build();
+		Problem problem = createProblemBuilder(status, problemType, detail)
+				.userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL)
+				.build();
 
 		return handleExceptionInternal(ex, problem, headers, status, request);
 	}
@@ -117,7 +123,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		HttpStatus status = HttpStatus.CONFLICT;
 		ProblemType problemType = ProblemType.ENTIDADE_EM_USO;
 		String detail = ex.getMessage();
-		Problem problem = createProblemBuilder(status, problemType, detail).build();
+		Problem problem = createProblemBuilder(status, problemType, detail)
+				.userMessage(detail)
+				.build();
 
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
@@ -131,18 +139,16 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
-	
+
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleUncaugth(Exception ex, WebRequest request) {
 		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-		ProblemType problemType = ProblemType.ERRO_NEGOCIO;		
-	    String detail = "Ocorreu um erro interno inesperado no sistema. "
-	            + "Tente novamente e se o problema persistir, entre em contato "
-	            + "com o administrador do sistema.";
-	    ex.printStackTrace();
+		ProblemType problemType = ProblemType.ERRO_NEGOCIO;
+		String detail = MSG_ERRO_GENERICA_USUARIO_FINAL;
+		ex.printStackTrace();
 
 		Problem problem = createProblemBuilder(status, problemType, detail).build();
-		
+
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
 

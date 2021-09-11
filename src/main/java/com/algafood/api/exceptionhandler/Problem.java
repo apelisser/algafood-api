@@ -14,14 +14,22 @@ public class Problem {
 	private String title;
 	private String detail;
 	
-	public Problem(Integer status, String type, String title, String detail) {
+	private String userMessage;
+	
+	public Problem(Integer status, String type, String title, String detail, String userMessage) {
 		this.status = status;
 		this.type = type;
 		this.title = title;
 		this.detail = detail;
+		this.userMessage = userMessage;
 	}
+	
+	public Problem(Integer status, String title, String userMessage) {
+		this(status, null, title, null, userMessage);
+	}
+
 	public Problem(Integer status, String title) {
-		this(status, null, title, null);
+		this(status, null, title, null, "");
 	}
 	
 	public Integer getStatus() {
@@ -39,5 +47,9 @@ public class Problem {
 	public String getDetail() {
 		return detail;
 	}
-	
+
+	public String getUserMessage() {
+		return userMessage;
+	}
+
 }
