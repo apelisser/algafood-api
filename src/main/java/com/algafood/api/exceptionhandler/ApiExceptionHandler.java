@@ -10,6 +10,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -66,7 +68,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
 		ProblemType problemType = ProblemType.RECURSO_NAO_ENCONTRADO;
-		String detail = String.format("O recurso %s, que você tentou acessar, é inexistente.", ex.getRequestURL());
+		String detail = String.format("O recurso %s, que você tentou acessar, é inexistente.", ex.getRequestURL());	
 		Problem problem = createProblemBuilder(status, problemType, detail)
 				.userMessage(detail)
 				.build();
@@ -80,8 +82,19 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		ProblemType problemType = ProblemType.DADOS_INVALIDOS;
 		String detail = String.format("Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente");
+		
+		BindingResult bindingResult = ex.getBindingResult();
+		
+		List<Problem.Field> problemFields = bindingResult.getFieldErrors().stream()
+				.map(fieldError ->  Problem.Field.builder()
+						.name(fieldError.getField())
+						.userMessage(fieldError.getDefaultMessage())
+						.build())
+				.collect(Collectors.toList());
+		
 		Problem problem = createProblemBuilder(status, problemType, detail)
 				.userMessage(detail)
+				.fields(problemFields)
 				.build();
 		
 		return handleExceptionInternal(ex, problem, headers, status, request);
@@ -164,8 +177,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
-
-	
 	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleUncaugth(Exception ex, WebRequest request) {
