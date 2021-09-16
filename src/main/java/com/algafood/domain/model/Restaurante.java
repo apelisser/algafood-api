@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.groups.ConvertGroup;
 import javax.validation.groups.Default;
 
@@ -46,6 +47,7 @@ public class Restaurante {
 
 	@Valid
 	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
+	@NotNull
 //	@JsonIgnore
 	@JsonIgnoreProperties({ "hibernateLazyInitializer" })
 	@ManyToOne // (fetch = FetchType.LAZY)
