@@ -38,7 +38,7 @@ public class Restaurante {
 
 //	@NotNull
 //	@NotEmpty
-	@NotBlank(message = "nome é obrigatório")
+	@NotBlank
 	private String nome;
 
 //	@DecimalMin("0")
