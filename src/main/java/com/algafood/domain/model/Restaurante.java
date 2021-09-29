@@ -26,7 +26,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.algafood.core.validation.Groups;
-import com.algafood.core.validation.TaxaFrete;
+import com.algafood.core.validation.Multiplo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -44,8 +44,9 @@ public class Restaurante {
 
 //	@DecimalMin("0")
 //	@NotNull
-	//@PositiveOrZero(message = "{TaxaFrete.invalida}")
-	@TaxaFrete
+//	@PositiveOrZero(message = "{TaxaFrete.invalida}")
+//	@TaxaFrete
+	@Multiplo(numero = 5)
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 
@@ -76,7 +77,7 @@ public class Restaurante {
 	@OneToMany(mappedBy = "restaurante")
 	private List<Produto> produtos = new ArrayList<>();
 
-//	@JsonIgnore
+	@JsonIgnore
 	@ManyToMany // (fetch = FetchType.EAGER)
 	@JoinTable(name = "restaurante_forma_pagamento", joinColumns = @JoinColumn(name = "restaurante_id"), inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
 	private List<FormaPagamento> formasPagamento = new ArrayList<>();
