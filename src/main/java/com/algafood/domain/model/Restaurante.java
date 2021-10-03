@@ -27,9 +27,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.algafood.core.validation.Groups;
 import com.algafood.core.validation.Multiplo;
+import com.algafood.core.validation.ValorZeroIncluiDescricao;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@ValorZeroIncluiDescricao(valorField = "taxaFrete", descricaoField = "nome", descricaoObrigatoria = "Frete grátis")
 @Entity
 public class Restaurante {
 
