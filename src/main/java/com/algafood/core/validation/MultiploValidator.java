@@ -23,7 +23,7 @@ public class MultiploValidator implements ConstraintValidator<Multiplo, Number> 
 			var multiploDecimal = BigDecimal.valueOf(this.numeroMultiplo);
 			var resto = valorDecimal.remainder(multiploDecimal);
 			
-			valido = BigDecimal.ZERO.compareTo(resto) == 0;
+			valido = BigDecimal.ZERO.compareTo(resto) == 0 ;
 		}
 		
 		return valido;
