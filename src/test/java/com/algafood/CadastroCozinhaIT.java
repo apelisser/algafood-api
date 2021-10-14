@@ -1,28 +1,45 @@
 package com.algafood;
 
-import org.aspectj.lang.annotation.Before;
+import org.flywaydb.core.Flyway;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.TestPropertySource;
+
+import com.algafood.domain.model.Cozinha;
+import com.algafood.domain.repository.CozinhaRepository;
+import com.algafood.util.DatabaseCleaner;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+
+@TestPropertySource("/application-test.properties")
 class CadastroCozinhaIT {
 
 	@LocalServerPort
 	private int port;
 	
-	// é executado antes dos testes abaixo serem executados
+	@Autowired
+	private DatabaseCleaner databaseCleaner;
+	
+	@Autowired
+	private CozinhaRepository cozinhaRepository;
+	
+	// é executado antes de cada teste(abaixo) ser executado
 	@BeforeEach
 	public void setUp() {
 		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 		RestAssured.port = port;
 		RestAssured.basePath = "/cozinhas";
+		
+		databaseCleaner.clearTables();
+		prepararDados();
 	}
 	
 	@Test
@@ -45,8 +62,31 @@ class CadastroCozinhaIT {
 		.when()
 			.get()
 		.then()
-			.body("", Matchers.hasSize(5))
-			.body("nome", Matchers.hasItems("Indiana", "Tailandesa"));
+			.body("", Matchers.hasSize(2))
+			.body("nome", Matchers.hasItems("Tailandesa", "Americana"));
+	}
+	
+	@Test
+	public void deveRetornarStatus201_QuandoCadastrarCozinha() {
+		RestAssured.given()
+			.body("{ \"nome\": \"Chinesa\" }")
+			.contentType(ContentType.JSON)
+			.accept(ContentType.JSON)
+		.when()
+			.post()
+		.then()
+			.statusCode(HttpStatus.CREATED.value());
+	}
+	
+	private void prepararDados() {
+		Cozinha cozinha1 = new Cozinha();
+		cozinha1.setNome("Tailandesa");
+		cozinhaRepository.save(cozinha1);
+		
+		
+		Cozinha cozinha2 = new Cozinha();
+		cozinha2.setNome("Americana");
+		cozinhaRepository.save(cozinha2);
 	}
 	
 	
