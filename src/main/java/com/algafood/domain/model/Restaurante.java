@@ -45,7 +45,7 @@ public class Restaurante {
 	private String nome;
 
 //	@DecimalMin("0")
-//	@NotNull
+	@NotNull
 //	@PositiveOrZero(message = "{TaxaFrete.invalida}")
 	@TaxaFrete
 //	@Multiplo(numero = 5)

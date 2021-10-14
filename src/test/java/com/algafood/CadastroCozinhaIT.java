@@ -1,6 +1,6 @@
 package com.algafood;
 
-import static org.hamcrest.CoreMatchers.equalTo;
+//import static org.hamcrest.CoreMatchers.equalTo;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -61,7 +61,7 @@ class CadastroCozinhaIT {
 	}
 	
 	@Test
-	public void deveConterAQuantidadeDeCozinhasCadastradas_QuandoConsultarCozinhas() {		
+	public void deveConterTodasAsCozinhasCadastradas_QuandoConsultarCozinhas() {		
 		RestAssured.given()
 			.accept(ContentType.JSON)
 		.when()
@@ -91,7 +91,7 @@ class CadastroCozinhaIT {
 			.get("/{cozinhaId}")
 		.then()
 			.statusCode(HttpStatus.OK.value())
-			.body("nome", equalTo(this.cozinhaAmericana.getNome()));
+			.body("nome", Matchers.equalTo(this.cozinhaAmericana.getNome()));
 	}
 	
 	@Test
