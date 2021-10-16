@@ -1,7 +1,7 @@
 package com.algafood.domain.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,11 +62,11 @@ public class Restaurante {
 
 	@CreationTimestamp
 	@Column(nullable = false, columnDefinition = "datetime")
-	private LocalDateTime dataCadastro;
+	private OffsetDateTime dataCadastro;
 
 	@UpdateTimestamp
 	@Column(nullable = false, columnDefinition = "datetime")
-	private LocalDateTime dataAtualizacao;
+	private OffsetDateTime dataAtualizacao;
 
 	@OneToMany(mappedBy = "restaurante")
 	private List<Produto> produtos = new ArrayList<>();
@@ -115,19 +115,19 @@ public class Restaurante {
 		this.formasPagamento = formasPagamento;
 	}
 
-	public LocalDateTime getDataCadastro() {
+	public OffsetDateTime getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public void setDataCadastro(LocalDateTime dataCadastro) {
+	public void setDataCadastro(OffsetDateTime dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 
-	public LocalDateTime getDataAtualizacao() {
+	public OffsetDateTime getDataAtualizacao() {
 		return dataAtualizacao;
 	}
 
-	public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+	public void setDataAtualizacao(OffsetDateTime dataAtualizacao) {
 		this.dataAtualizacao = dataAtualizacao;
 	}
 
