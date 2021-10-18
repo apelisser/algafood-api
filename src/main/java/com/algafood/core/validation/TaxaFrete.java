@@ -29,6 +29,4 @@ public @interface TaxaFrete {
 
 	Class<? extends Payload>[] payload() default { };
 
-	
-	
 }
