@@ -39,20 +39,20 @@ public class Restaurante {
 
 //	@NotNull
 //	@NotEmpty
-	@NotBlank
+//	@NotBlank
 	private String nome;
 
 //	@DecimalMin("0")
-	@NotNull
+//	@NotNull
 //	@PositiveOrZero(message = "{TaxaFrete.invalida}")
-	@TaxaFrete
+//	@TaxaFrete
 //	@Multiplo(numero = 5)
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 
-	@Valid
-	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
-	@NotNull
+//	@Valid
+//	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
+//	@NotNull
 	@ManyToOne // (fetch = FetchType.LAZY)
 	@JoinColumn(name = "cozinha_id")
 	private Cozinha cozinha;
