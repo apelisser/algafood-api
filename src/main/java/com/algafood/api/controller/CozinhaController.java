@@ -48,7 +48,8 @@ public class CozinhaController {
 
 	@GetMapping("/{cozinhaId}")
 	public CozinhaModel buscar(@PathVariable Long cozinhaId) {
-		return cozinhaModelAssembler.toModel(cadastroCozinha.buscarOuFalhar(cozinhaId));
+		Cozinha cozinha = cadastroCozinha.buscarOuFalhar(cozinhaId);
+		return cozinhaModelAssembler.toModel(cozinha);
 	}
 
 	@PostMapping
