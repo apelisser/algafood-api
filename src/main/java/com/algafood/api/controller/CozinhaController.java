@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.algafood.api.assembler.CozinhaInputDisasembler;
+import com.algafood.api.assembler.CozinhaInputDisassembler;
 import com.algafood.api.assembler.CozinhaModelAssembler;
 import com.algafood.api.model.CozinhaModel;
 import com.algafood.api.model.input.CozinhaInput;
@@ -38,7 +38,7 @@ public class CozinhaController {
 	private CozinhaModelAssembler cozinhaModelAssembler;
 	
 	@Autowired
-	private CozinhaInputDisasembler cozinhaInputDisassembler;
+	private CozinhaInputDisassembler cozinhaInputDisassembler;
 	
 
 	@GetMapping
