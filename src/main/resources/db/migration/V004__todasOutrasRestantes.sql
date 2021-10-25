@@ -1,23 +1,29 @@
 create table forma_pagamento (
 	id bigint not null auto_increment, 
 	descricao varchar(60), 
+
 	primary key (id)
 ) engine=InnoDB default charset=utf8;
 
 create table grupo (
 	id bigint not null auto_increment, 
+	nome varchar(60) not null,
+
 	primary key (id)
 ) engine=InnoDB default charset=utf8;
 
 create table grupo_permissao (
 	grupo_id bigint not null, 
-	permissao_id bigint not null
+	permissao_id bigint not null,
+
+	primary key(grupo_id, permissao_id)
 ) engine=InnoDB default charset=utf8;
 
 create table permissao (
 	id bigint not null auto_increment, 
 	descricao varchar(150), 
 	nome_string varchar(60), 
+
 	primary key (id)
 ) engine=InnoDB default charset=utf8;
 
@@ -28,6 +34,7 @@ create table produto (
 	nome varchar(60), 
 	preco decimal(19,2), 
 	restaurante_id bigint, 
+
 	primary key (id)
 ) engine=InnoDB default charset=utf8;
 
@@ -44,12 +51,15 @@ create table restaurante (
 	taxa_frete decimal(19,2) not null, 
 	cozinha_id bigint, 
 	endereco_cidade_id bigint, 
+
 	primary key (id)
 ) engine=InnoDB default charset=utf8;
 
 create table restaurante_forma_pagamento (
 	restaurante_id bigint not null, 
-	forma_pagamento_id bigint not null
+	forma_pagamento_id bigint not null,
+
+	primary key (restaurante_id, forma_pagamento_id)
 ) engine=InnoDB default charset=utf8;
 
 create table usuario (
@@ -57,12 +67,15 @@ create table usuario (
 	data_cadastro datetime(6), 
 	nome varchar(10), 
 	senha varchar(30), 
+	
 	primary key (id)
 ) engine=InnoDB default charset=utf8;
 
 create table usuario_grupo (
 	usuario_id bigint not null, 
-	grupo_id bigint not null
+	grupo_id bigint not null,
+
+	primary key (usuario_id, grupo_id)
 ) engine=InnoDB default charset=utf8;
 
 alter table grupo_permissao add constraint fk_grupo_permissao_permissao foreign key (permissao_id) references permissao (id);

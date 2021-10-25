@@ -18,11 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.algafood.api.assembler.GrupoInputDisassembler;
 import com.algafood.api.assembler.GrupoModelAssembler;
-import com.algafood.api.model.EstadoModel;
 import com.algafood.api.model.GrupoModel;
-import com.algafood.api.model.input.EstadoInput;
 import com.algafood.api.model.input.GrupoInput;
-import com.algafood.domain.model.Estado;
 import com.algafood.domain.model.Grupo;
 import com.algafood.domain.repository.GrupoRepository;
 import com.algafood.domain.service.CadastroGrupoService;
@@ -45,12 +42,12 @@ public class GrupoController {
 	
 	
 	@GetMapping
-	public List<GrupoModel> listar () {
+	public List<GrupoModel> listar() {
 		return grupoModelAssembler.toCollectionModel(grupoRepository.findAll());
 	}
 	
-	@GetMapping("grupoId")
-	public GrupoModel buscar (@PathVariable Long grupoId) {
+	@GetMapping("{grupoId}")
+	public GrupoModel buscar(@PathVariable Long grupoId) {
 		Grupo grupo = cadastroGrupo.buscarOuFalhar(grupoId);
 		return grupoModelAssembler.toModel(grupo);
 	}
