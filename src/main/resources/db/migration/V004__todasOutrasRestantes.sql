@@ -63,10 +63,11 @@ create table restaurante_forma_pagamento (
 ) engine=InnoDB default charset=utf8;
 
 create table usuario (
-	id bigint not null auto_increment, 
-	data_cadastro datetime(6), 
-	nome varchar(10), 
-	senha varchar(30), 
+	id bigint not null auto_increment,
+	nome varchar(80) not null,
+	email varchar(255) not null,
+	senha varchar(255) not null,
+	data_cadastro datetime not null,
 	
 	primary key (id)
 ) engine=InnoDB default charset=utf8;

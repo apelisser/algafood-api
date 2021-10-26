@@ -14,13 +14,22 @@ import javax.persistence.ManyToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
 public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private String nome;
+	
+	private String email;
+	
 	private String senha;
 	
 	@CreationTimestamp
@@ -33,35 +42,12 @@ public class Usuario {
 	private List<Grupo> grupos;
 	
 	
-	public Long getId() {
-		return id;
+	public boolean senhaCoincideCom(String senha) {
+		return getSenha().equals(senha);
 	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getNome() {
-		return nome;
-	}
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	public String getSenha() {
-		return senha;
-	}
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-	public OffsetDateTime getDataCadastro() {
-		return dataCadastro;
-	}
-	public void setDataCadastro(OffsetDateTime dataCadastro) {
-		this.dataCadastro = dataCadastro;
-	}
-	public List<Grupo> getGrupos() {
-		return grupos;
-	}
-	public void setGrupos(List<Grupo> grupos) {
-		this.grupos = grupos;
+	
+	public boolean senhaNaoCoincideCom(String senha) {
+	    return !senhaCoincideCom(senha);
 	}
 	
 	@Override

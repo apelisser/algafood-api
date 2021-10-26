@@ -20,6 +20,7 @@ import com.algafood.api.assembler.RestauranteInputDisassembler;
 import com.algafood.api.assembler.RestauranteModelAssembler;
 import com.algafood.api.model.RestauranteModel;
 import com.algafood.api.model.input.RestauranteInput;
+import com.algafood.api.model.input.SenhaInput;
 import com.algafood.domain.exception.CidadeNaoEncontradaException;
 import com.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.algafood.domain.exception.NegocioException;
@@ -93,7 +94,7 @@ public class RestauranteController {
 	
 	@DeleteMapping("/{restauranteId}/ativo")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void inativar(@PathVariable Long restauranteId) {
+	public void inativar(@PathVariable Long restauranteId, @RequestBody @Valid SenhaInput senhaInput) {
 		cadastroRestaurante.inativar(restauranteId);
 	}
 
