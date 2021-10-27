@@ -76,7 +76,7 @@ public class UsuarioController {
 	
 	@PutMapping("/{usuarioId}/senha")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void ativar(@PathVariable Long usuarioId, @RequestBody SenhaInput senhaInput) {
+	public void ativar(@PathVariable Long usuarioId, @RequestBody @Valid SenhaInput senhaInput) {
 		cadastroUsuario.alterarSenha(
 				usuarioId, 
 				senhaInput.getSenhaAtual(), 

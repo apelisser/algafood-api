@@ -39,6 +39,7 @@ public class CadastroUsuarioService {
 		}
 	}
 	
+	@Transactional
 	public void alterarSenha(Long usuarioId, String senhaAtual, String novaSenha) {
 		Usuario usuario = buscarOuFalhar(usuarioId);
 		
