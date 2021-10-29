@@ -24,7 +24,6 @@ public class RestauranteFormaPagamentoController {
 	@Autowired
 	private CadastroRestauranteService cadastroRestaurante;
 	
-
 	@Autowired
 	private FormaPagamentoModelAssembler formaPagamentoModelAssembler;
 	

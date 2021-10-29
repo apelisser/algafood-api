@@ -15,6 +15,7 @@ import com.algafood.domain.repository.GrupoRepository;
 public class CadastroGrupoService {
 
 	private static final String MSG_GRUPO_EM_USO = "Grupo de código %d não pode ser removido, pois está em uso";
+	
 	@Autowired
 	private GrupoRepository grupoRepository;
 	
