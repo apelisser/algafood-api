@@ -46,6 +46,8 @@ public class Restaurante {
 	@JoinColumn(name = "cozinha_id")
 	private Cozinha cozinha;
 	
+	private Boolean aberto = Boolean.FALSE;
+
 	private Boolean ativo = Boolean.TRUE;
 
 	@Embedded
@@ -66,6 +68,14 @@ public class Restaurante {
 	@JoinTable(name = "restaurante_forma_pagamento", joinColumns = @JoinColumn(name = "restaurante_id"), inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
 	private Set<FormaPagamento> formasPagamento = new HashSet<>();
 
+	public void abrir() {
+		setAberto(true);
+	}
+	
+	public void fechar() {
+		setAberto(false);
+	}
+	
 	public void ativar() {
 		setAtivo(true);
 	}
