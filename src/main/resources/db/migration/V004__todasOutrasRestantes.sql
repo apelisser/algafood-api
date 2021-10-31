@@ -22,7 +22,7 @@ create table grupo_permissao (
 create table permissao (
 	id bigint not null auto_increment, 
 	descricao varchar(150), 
-	nome_string varchar(60), 
+	nome varchar(60), 
 
 	primary key (id)
 ) engine=InnoDB default charset=utf8;
