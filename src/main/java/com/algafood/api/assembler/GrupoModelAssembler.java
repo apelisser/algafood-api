@@ -27,6 +27,4 @@ public class GrupoModelAssembler {
 		return modelMapper.map(grupo, GrupoModel.class);
 	}
 	
-	
-	
 }
