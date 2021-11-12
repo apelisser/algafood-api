@@ -10,6 +10,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -49,7 +50,7 @@ public class Pedido {
     @JoinColumn(nullable = false)
 	private Restaurante restaurante;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
 	private FormaPagamento formaPagamento;
 	
@@ -58,7 +59,7 @@ public class Pedido {
 	private Usuario cliente;
 	
 	@Enumerated(EnumType.STRING)
-	private StatusPedido status = StatusPedido.ENTREGUE;;
+	private StatusPedido status = StatusPedido.ENTREGUE;
 	
 	@OneToMany(mappedBy = "pedido")
 	private List<ItemPedido> itens = new ArrayList<>();
