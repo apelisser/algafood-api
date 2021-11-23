@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -61,11 +62,13 @@ public class Pedido {
 	@Enumerated(EnumType.STRING)
 	private StatusPedido status = StatusPedido.ENTREGUE;
 	
-	@OneToMany(mappedBy = "pedido")
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
 	private List<ItemPedido> itens = new ArrayList<>();
 
 	
 	public void calcularValorTotal() {
+		getItens().forEach(ItemPedido::calcularPrecoTotal);
+		
 		this.subtotal = getItens().stream()
 				.map(item -> item.getPrecoTotal())
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
