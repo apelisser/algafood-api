@@ -3,12 +3,9 @@ package com.algafood.api.model;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
-
 import lombok.Getter;
 import lombok.Setter;
 
-@JsonFilter("pedidoFilter")
 @Setter
 @Getter
 public class PedidoResumoModel {
@@ -21,5 +18,5 @@ public class PedidoResumoModel {
 	private OffsetDateTime dataCriacao;
 	private RestauranteResumoModel restaurante;
 	private UsuarioModel cliente;
-	
+
 }
