@@ -14,9 +14,13 @@ public class PedidoSpecs {
 
 	public static Specification<Pedido> usandoFiltro(PedidoFilter filtro) {
 		return (root, query, builder) -> {
-			// resolver problema N+1
-			root.fetch("restaurante").fetch("cozinha");
-			root.fetch("cliente");
+			
+			// quando for executado o count, não executa o fetch, com isso não gera exceção
+			if (PedidoFilter.class.equals(query.getResultType())) {
+				// resolver problema N+1
+				root.fetch("restaurante").fetch("cozinha");
+				root.fetch("cliente");
+			}
 			
 			var predicates = new ArrayList<Predicate>();
 			
