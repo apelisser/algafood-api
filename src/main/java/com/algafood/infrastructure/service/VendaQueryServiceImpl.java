@@ -19,19 +19,23 @@ import com.algafood.domain.service.VendaQueryService;
 
 @Repository
 public class VendaQueryServiceImpl implements VendaQueryService{
-
+	
 	@Autowired
 	private EntityManager manager;
 	
 	@Override
-	public List<VendaDiaria> consultarVendasDiarias(VendaDiariaFilter filtro) {
+	public List<VendaDiaria> consultarVendasDiarias(VendaDiariaFilter filtro, String timeOffset) {
 		List<Predicate> predicates = new ArrayList<>();
 		var builder = manager.getCriteriaBuilder();
 		var query = builder.createQuery(VendaDiaria.class);
 		var root = query.from(Pedido.class);
 		
+		var functionConvertTzDataCriacao = builder.function(
+				"convert_tz", Date.class, root.get("dataCriacao"), 
+				builder.literal("+00:00"), builder.literal(timeOffset));
+		
 		var funcionDateDataCriacao = builder.function(
-				"date", Date.class, root.get("dataCriacao"));
+				"date", Date.class, functionConvertTzDataCriacao);
 		
 		var selection = builder.construct(VendaDiaria.class, 
 				funcionDateDataCriacao, 
