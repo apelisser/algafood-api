@@ -21,9 +21,15 @@ public class CatalogoFotoProdutoService {
 	@Autowired
 	private FotoStorageService fotoStorageService;
 	
-	public FotoProduto buscarOuFalhar(Long restauranteId, Long produtoId) {
-		return produtoRepository.findFotoById(restauranteId, produtoId)
-				.orElseThrow(() -> new FotoProdutoNaoEncontradaException(restauranteId, produtoId));
+	
+	@Transactional
+	public void excluir (Long restauranteId, Long produtoId) {
+		FotoProduto foto = buscarOuFalhar(restauranteId, produtoId);
+		
+		produtoRepository.delete(foto);
+		produtoRepository.flush();
+		
+		fotoStorageService.remover(foto.getNomeArquivo());
 	}
 	
 	@Transactional
@@ -55,4 +61,9 @@ public class CatalogoFotoProdutoService {
 		return foto;
 	}
 	
+	public FotoProduto buscarOuFalhar(Long restauranteId, Long produtoId) {
+		return produtoRepository.findFotoById(restauranteId, produtoId)
+				.orElseThrow(() -> new FotoProdutoNaoEncontradaException(restauranteId, produtoId));
+	}
+
 }
