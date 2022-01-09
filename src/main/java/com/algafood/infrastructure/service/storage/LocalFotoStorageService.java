@@ -1,7 +1,6 @@
 package com.algafood.infrastructure.service.storage;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -11,7 +10,6 @@ import org.springframework.util.FileCopyUtils;
 import com.algafood.core.storage.StorageProperties;
 import com.algafood.domain.service.FotoStorageService;
 
-//@Service
 public class LocalFotoStorageService implements FotoStorageService {
 	
 	@Autowired
