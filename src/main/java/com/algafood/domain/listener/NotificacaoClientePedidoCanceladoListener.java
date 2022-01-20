@@ -1,0 +1,35 @@
+package com.algafood.domain.listener;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionalEventListener;
+
+import com.algafood.domain.event.PedidoCanceladoEvent;
+import com.algafood.domain.model.Pedido;
+import com.algafood.domain.service.EnvioEmailService;
+import com.algafood.domain.service.EnvioEmailService.Mensagem;
+
+@Component
+public class NotificacaoClientePedidoCanceladoListener {
+
+	@Autowired
+	private EnvioEmailService envioEmail;
+	
+	//@EventListener
+	// se houver erro no envio do e-mail, será feito rollback no banco de dados
+	//@TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
+	@TransactionalEventListener
+	public void aoCancelarPedido(PedidoCanceladoEvent event) {
+		Pedido pedido = event.getPedido();
+		
+		var mensagem = Mensagem.builder()
+				.assunto(pedido.getRestaurante().getNome() + " - Pedido cancelado")
+				.corpo("pedido-cancelado.html")
+				.variavel("pedido", pedido)
+				.destinatario(pedido.getCliente().getEmail())
+				.build();
+
+		envioEmail.enviar(mensagem);
+	}
+
+}

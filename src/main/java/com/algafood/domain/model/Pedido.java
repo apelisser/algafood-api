@@ -23,6 +23,7 @@ import javax.persistence.PrePersist;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
+import com.algafood.domain.event.PedidoCanceladoEvent;
 import com.algafood.domain.event.PedidoConfirmadoEvent;
 import com.algafood.domain.exception.NegocioException;
 
@@ -108,6 +109,8 @@ public class Pedido extends AbstractAggregateRoot<Pedido>{
 	public void cancelar() {
 		setStatus(StatusPedido.CANCELADO);
 		setDataCancelamento(OffsetDateTime.now());
+		
+		registerEvent(new PedidoCanceladoEvent(this));
 	}
 	
 	private void setStatus(StatusPedido novoStatus) {
@@ -120,10 +123,8 @@ public class Pedido extends AbstractAggregateRoot<Pedido>{
 		this.status = novoStatus;
 	}
 	
-	
 	@PrePersist //método de callback JPA - é executado antes de persistir no banco
 	private void gerarCodigo() {
 		setCodigo(UUID.randomUUID().toString());
 	}
-		
 }
