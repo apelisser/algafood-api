@@ -60,8 +60,7 @@ public class FormaPagamentoController {
 		if (request.checkNotModified(eTag)) {
 			return null;
 		}
-		
-		
+
 		List<FormaPagamento> todasFormasPagamentos = formaPagamentoRepository.findAll();
 		
 		List<FormaPagamentoModel> formasPagamentosModel = formaPagamentoModelAssembler
@@ -74,13 +73,29 @@ public class FormaPagamentoController {
 	}
 	
 	@GetMapping("/{formaPagamentoId}")
-	public ResponseEntity<FormaPagamentoModel> buscar(@PathVariable Long formaPagamentoId) {
+	public ResponseEntity<FormaPagamentoModel> buscar(@PathVariable Long formaPagamentoId, ServletWebRequest request) {
+		ShallowEtagHeaderFilter.disableContentCaching(request.getRequest());
+		
+		String eTag = "0";
+		
+		OffsetDateTime dataAtualizacao = formaPagamentoRepository
+				.getDataAtualizacaoById(formaPagamentoId);
+		
 		FormaPagamento formaPagamento = cadastroFormaPagamento.buscarOuFalhar(formaPagamentoId);
 		
+		if (dataAtualizacao != null) {
+			eTag = String.valueOf(dataAtualizacao.toEpochSecond());
+		}
+		
+		if (request.checkNotModified(eTag)) {
+			return null;
+		}
+				
 		FormaPagamentoModel formaPagamentoModel = formaPagamentoModelAssembler.toModel(formaPagamento);
 		
 		return ResponseEntity.ok()
-				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))
+				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS).cachePublic())
+				.eTag(eTag)
 				.body(formaPagamentoModel);
 	}
 	
