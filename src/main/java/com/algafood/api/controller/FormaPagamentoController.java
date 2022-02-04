@@ -52,11 +52,7 @@ public class FormaPagamentoController {
 				.toCollectionModel(todasFormasPagamentos);
 		
 		return ResponseEntity.ok()
-//				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))
-//				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS).cachePrivate())
-//				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS).cachePublic())
-//				.cacheControl(CacheControl.noCache())
-				.cacheControl(CacheControl.noStore())
+				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS).cachePublic())
 				.body(formasPagamentosModel);
 	}
 	
