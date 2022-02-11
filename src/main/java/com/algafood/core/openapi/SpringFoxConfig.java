@@ -11,6 +11,7 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
+import springfox.documentation.service.Tag;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
@@ -18,6 +19,12 @@ import springfox.documentation.spring.web.plugins.Docket;
 @EnableOpenApi
 //@EnableSwagger2
 public class SpringFoxConfig implements WebMvcConfigurer{
+
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("index.html")
+		.addResourceLocations("classpath:/META-INF/resources/");
+	}
 
 	@Bean
 	public Docket apiDocket() {
@@ -29,10 +36,11 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 					.apis(RequestHandlerSelectors.basePackage("com.algafood.api"))
 					.paths(PathSelectors.any())
 					.build()
-				.apiInfo(apiInfo());
+				.apiInfo(apiInfo())
+				.tags(tags()[0], tags());
 	}
 	
-	public ApiInfo apiInfo() {
+	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
 				.title("AlgaFood API :: Abner J Pelisser")
 				.description("Api desenvolvida no curso Especialista Spring Rest - AlgaWorks")
@@ -41,10 +49,9 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 				.build();
 	}
 	
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("index.html")
-			.addResourceLocations("classpath:/META-INF/resources/");
+	private Tag[] tags() {
+		return new Tag[] {
+			new Tag("Cidades", "Gerencia cidades")	
+		};
 	}
-	
 }
