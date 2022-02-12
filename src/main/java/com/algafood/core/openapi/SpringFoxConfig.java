@@ -2,12 +2,14 @@ package com.algafood.core.openapi;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -18,6 +20,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RepresentationBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.builders.ResponseBuilder;
 import springfox.documentation.oas.annotations.EnableOpenApi;
@@ -61,8 +64,8 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 					.build()
 				.useDefaultResponseMessages(false)
 				.globalResponses(HttpMethod.GET, globalGetResponseMessages())
-				.globalResponses(HttpMethod.POST, globalPostResponseMessages())
-				.globalResponses(HttpMethod.PUT, globalPutResponseMessages())
+				.globalResponses(HttpMethod.POST, globalPostPutResponseMessages())
+				.globalResponses(HttpMethod.PUT, globalPostPutResponseMessages())
 				.globalResponses(HttpMethod.DELETE, globalDeleteResponseMessages())
 				.additionalModels(typeResolver.resolve(Problem.class))
 				.apiInfo(apiInfo())
@@ -74,6 +77,8 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 			      new ResponseBuilder()
 			          .code(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
 			          .description("Erro interno do Servidor")
+			          .representation(MediaType.APPLICATION_JSON)
+			          .apply(getProblemaModelReference())
 			          .build(),
 			      new ResponseBuilder()
 			          .code(String.valueOf(HttpStatus.NOT_ACCEPTABLE.value()))
@@ -82,15 +87,19 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 			  );
 	}
 	
-	private List<Response> globalPostResponseMessages() {
+	private List<Response> globalPostPutResponseMessages() {
 		  return Arrays.asList(
 			      new ResponseBuilder()
 			          .code(String.valueOf(HttpStatus.BAD_REQUEST.value()))
 			          .description("Requisição inválida (erro do cliente)")
+			          .representation(MediaType.APPLICATION_JSON)
+			          .apply(getProblemaModelReference())
 			          .build(),
 			      new ResponseBuilder()
 			          .code(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
 			          .description("Erro interno do Servidor")
+			          .representation(MediaType.APPLICATION_JSON)
+			          .apply(getProblemaModelReference())
 			          .build(),
 			      new ResponseBuilder()
 			          .code(String.valueOf(HttpStatus.NOT_ACCEPTABLE.value()))
@@ -99,6 +108,8 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 			      new ResponseBuilder()
 			          .code(String.valueOf(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value()))
 			          .description("Requisição recusada porque o corpo está em um formato não suportado")
+			          .representation(MediaType.APPLICATION_JSON)
+			          .apply(getProblemaModelReference())
 			          .build()
 			  );
 	}
@@ -108,31 +119,14 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 			      new ResponseBuilder()
 			          .code(String.valueOf(HttpStatus.BAD_REQUEST.value()))
 			          .description("Requisição inválida (erro do cliente)")
+			          .representation(MediaType.APPLICATION_JSON)
+			          .apply(getProblemaModelReference())
 			          .build(),
 			      new ResponseBuilder()
 			          .code(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
 			          .description("Erro interno do Servidor")
-			          .build(),
-			      new ResponseBuilder()
-			          .code(String.valueOf(HttpStatus.NOT_ACCEPTABLE.value()))
-			          .description("Recurso não possui representação que pode ser aceita pelo consumidor")
-			          .build(),
-			      new ResponseBuilder()
-			          .code(String.valueOf(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value()))
-			          .description("Requisição recusada porque o corpo está em um formato não suportado")
-			          .build()
-			  );
-	}
-	
-	private List<Response> globalPutResponseMessages() {
-		  return Arrays.asList(
-			      new ResponseBuilder()
-			          .code(String.valueOf(HttpStatus.BAD_REQUEST.value()))
-			          .description("Requisição inválida (erro do cliente)")
-			          .build(),
-			      new ResponseBuilder()
-			          .code(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
-			          .description("Erro interno do Servidor")
+			          .representation(MediaType.APPLICATION_JSON)
+			          .apply(getProblemaModelReference())
 			          .build()
 			  );
 	}
@@ -144,6 +138,12 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 				.version("1")
 				.contact(new Contact("Abner J Pelisser", "https://github.com/abnerjp", "abner.pelisser@gmail.com"))
 				.build();
+	}
+	
+	private Consumer<RepresentationBuilder> getProblemaModelReference() {
+			return r -> r.model(m -> m.name("Problema")
+					.referenceModel(ref -> ref.key(k -> k.qualifiedModelName(
+							q -> q.name("Problema").namespace("com.algafood.api.exceptionhandler")))));
 	}
 	
 	private Tag[] tags() {
