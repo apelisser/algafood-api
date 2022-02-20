@@ -17,7 +17,7 @@ import lombok.Getter;
 @Builder
 public class Problem {
 		
-	@ApiModelProperty(example = "400", position = 0)
+	@ApiModelProperty(example = "400", position = 1)
 	private Integer status;
 	
 	@ApiModelProperty(example = "2022-02-12T14:42:16.811764133Z", position = 10)
