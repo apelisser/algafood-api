@@ -44,7 +44,7 @@ public interface CozinhaControllerOpenApi {
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "Cozinha atualizada"),
 		@ApiResponse(responseCode = "404", description = "Cozinha não encontrada",
-			content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
+				content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 	})
 	public CozinhaModel atualizar(
 			@ApiParam(value = "ID de uma cozinha", example = "1")
