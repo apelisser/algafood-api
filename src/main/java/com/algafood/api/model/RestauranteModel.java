@@ -31,7 +31,11 @@ public class RestauranteModel {
 	
 	@JsonView(RestauranteView.Resumo.class)
 	private CozinhaModel cozinha;
+	
+	@ApiModelProperty(example = "false")
 	private Boolean aberto;
+
+	@ApiModelProperty(example = "true")
 	private Boolean ativo;
 	private EnderecoModel endereco;
 
