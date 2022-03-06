@@ -18,8 +18,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.algafood.api.exceptionhandler.Problem;
 import com.algafood.api.model.CozinhaModel;
+import com.algafood.api.model.PedidoResumoModel;
 import com.algafood.api.openapi.model.CozinhasModelOpenApi;
 import com.algafood.api.openapi.model.PageableModelOpenApi;
+import com.algafood.api.openapi.model.PedidosModelOpenApi;
 import com.fasterxml.classmate.TypeResolver;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -74,21 +76,16 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 				.globalResponses(HttpMethod.POST, globalPostPutResponseMessages())
 				.globalResponses(HttpMethod.PUT, globalPostPutResponseMessages())
 				.globalResponses(HttpMethod.DELETE, globalDeleteResponseMessages())
-//				.globalRequestParameters(Collections.singletonList(
-//						new RequestParameterBuilder()
-//							.name("campos")
-//							.description("Nomes das propriedades para filtrar na resposta, separados por vírgula")
-//							.in(ParameterType.QUERY)
-//							.required(true)
-//							.query(q -> q.model(m -> m.scalarModel(ScalarType.STRING)))
-//							.build()
-//						))
 				.additionalModels(typeResolver.resolve(Problem.class))
 				.ignoredParameterTypes(ServletWebRequest.class)
 				.directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
 				.alternateTypeRules(AlternateTypeRules.newRule(
 						typeResolver.resolve(Page.class, CozinhaModel.class),
 						CozinhasModelOpenApi.class))
+				.apiInfo(apiInfo())
+				.alternateTypeRules(AlternateTypeRules.newRule(
+						typeResolver.resolve(Page.class, PedidoResumoModel.class),
+						PedidosModelOpenApi.class))
 				.apiInfo(apiInfo())
 				.tags(tags()[0], tags());
 	}
@@ -172,7 +169,8 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 			new Tag("Cidades", "Gerencia as cidades"),
 			new Tag("Grupos", "Gerencia os grupos de usuários"),
 			new Tag("Cozinhas", "Gerencia as cozinhas"),
-			new Tag("Formas Pagamento", "Gerencia as formas de pagamento")
+			new Tag("Formas Pagamento", "Gerencia as formas de pagamento"),
+			new Tag("Pedidos", "Gerencia os pedidos")
 		};
 	}
 }

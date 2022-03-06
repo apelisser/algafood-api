@@ -3,7 +3,7 @@ package com.algafood.api.openapi.model;
 import java.util.List;
 
 import io.swagger.annotations.ApiModel;
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,13 +12,13 @@ import lombok.Setter;
 @ApiModel("Pageable")
 public class PageableModelOpenApi {
 
-	@Schema(example = "0", description = "Número da página (começa com 0)")
+	@ApiModelProperty(example = "0", value = "Número da página (começa com 0)")
 	private int page;
 	
-	@Schema(example = "10", description = "Quantidade de elementos por página")
+	@ApiModelProperty(example = "10", value = "Quantidade de elementos por página")
 	private int size;
 	
-	@Schema(example = "nome,asc", description = "Nome da propriedade para ordenação")
+	@ApiModelProperty(example = "nome,asc", value = "Nome da propriedade para ordenação")
 	private List<String> sort;
 	
 }
