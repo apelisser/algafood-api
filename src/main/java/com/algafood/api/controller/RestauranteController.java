@@ -31,6 +31,10 @@ import com.algafood.domain.repository.RestauranteRepository;
 import com.algafood.domain.service.CadastroRestauranteService;
 import com.fasterxml.jackson.annotation.JsonView;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.v3.oas.annotations.Operation;
+
 
 @RestController
 @RequestMapping(value = "/restaurantes")
@@ -49,12 +53,18 @@ public class RestauranteController {
 	private RestauranteInputDisassembler restauranteInpudDisassembler;
 	
 	
+	@Operation(summary = "Lista restaurantes")
+	@ApiImplicitParams({
+		@ApiImplicitParam(value = "Nome da projeção de pedidos", name = "projecao", 
+				paramType = "query", dataTypeClass = String.class, allowableValues = "apenas-nome")
+	})
 	@JsonView(RestauranteView.Resumo.class)
 	@GetMapping
 	public List<RestauranteModel> listar() {
 		return restauranteModelAssembler.toCollectionModel(restauranteRepository.findAll());
 	}
 	
+	@Operation(summary = "Lista restaurantes", hidden = true)
 	@JsonView(RestauranteView.ApenasNome.class)
 	@GetMapping(params = "projecao=apenas-nome")
 	public List<RestauranteModel> listarApenasNomes() {
