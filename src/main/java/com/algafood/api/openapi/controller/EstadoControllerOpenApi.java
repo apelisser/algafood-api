@@ -31,7 +31,7 @@ public interface EstadoControllerOpenApi {
 				content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 	})
 	public EstadoModel buscar(
-			@Parameter(description = "ID de um estado", example = "1")
+			@Parameter(description = "ID de um estado", example = "1", required = true)
 			Long estadoId);
 
 	@Operation(summary = "Cadastra um estado")
@@ -47,7 +47,7 @@ public interface EstadoControllerOpenApi {
 				content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 	})
 	public EstadoModel atualizar(
-			@Parameter(description = "ID de um estado", example = "1")
+			@Parameter(description = "ID de um estado", example = "1", required = true)
 			Long estadoId, 
 			
 			@ApiParam(name = "corpo", value = "Representação de um estado com os novos dados")
@@ -60,7 +60,7 @@ public interface EstadoControllerOpenApi {
 				content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 	})
 	public void remover(
-			@Parameter(description = "ID de um estado", example = "1")
+			@Parameter(description = "ID de um estado", example = "1", required = true)
 			Long estadoId);
 	
 }
