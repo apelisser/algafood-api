@@ -37,6 +37,7 @@ public class RestauranteModel {
 
 	@ApiModelProperty(example = "true")
 	private Boolean ativo;
+	
 	private EnderecoModel endereco;
 
 }
