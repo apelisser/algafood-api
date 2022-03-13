@@ -31,8 +31,7 @@ public interface GrupoPermissaoControllerOpenApi {
 	
 	@Operation(summary = "Associação de permissão com grupo")
 	@ApiResponses({
-		@ApiResponse(responseCode = "204", description = "Associação realizada com sucesso", 
-				content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Problem.class))),
+		@ApiResponse(responseCode = "204", description = "Associação realizada com sucesso"),
 		@ApiResponse(responseCode = "404", description = "Grupo ou permissão não encontrada",
 				content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 	})
@@ -45,8 +44,7 @@ public interface GrupoPermissaoControllerOpenApi {
 	
 	@Operation(summary = "Associação de permissão com grupo")
 	@ApiResponses({
-		@ApiResponse(responseCode = "204", description = "desassociação realizada com sucesso", 
-				content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Problem.class))),
+		@ApiResponse(responseCode = "204", description = "desassociação realizada com sucesso"),
 		@ApiResponse(responseCode = "404", description = "Grupo ou permissão não encontrada",
 				content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 	})
