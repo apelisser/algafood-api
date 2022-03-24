@@ -23,7 +23,8 @@ public class CidadeModelAssembler extends RepresentationModelAssemblerSupport<Ci
 	}
 
 	@Override
-	public CidadeModel toModel(Cidade cidade) {		
+	public CidadeModel toModel(Cidade cidade) {
+		// utilizando 'createModelWithId' o link 'self já é adicionado'
 		CidadeModel cidadeModel = createModelWithId(cidade.getId(), cidade);
 	
 		modelMapper.map(cidade, cidadeModel);
@@ -42,6 +43,6 @@ public class CidadeModelAssembler extends RepresentationModelAssemblerSupport<Ci
 	public CollectionModel<CidadeModel> toCollectionModel(Iterable<? extends Cidade> entities) {
 		return super.toCollectionModel(entities)
 				.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(CidadeController.class)
-				.listar()).withSelfRel());
+						.listar()).withSelfRel());
 	}
 }
