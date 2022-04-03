@@ -1,7 +1,7 @@
 package com.algafood.api.openapi.controller;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 
 import com.algafood.api.model.PedidoModel;
 import com.algafood.api.model.PedidoResumoModel;
@@ -22,7 +22,7 @@ public interface PedidoControllerOpenApi {
 		@ApiImplicitParam(value = "Nomes das propriedades para filtrar, separados por vírgula",
 				name = "campos", paramType = "query", dataTypeClass =  String.class)
 	})
-	public Page<PedidoResumoModel> pesquisar(PedidoFilter filtro, Pageable pageable);
+	public PagedModel<PedidoResumoModel> pesquisar(PedidoFilter filtro, Pageable pageable);
 	
 	@Operation(summary = "Busca um pedido por código")
 	@ApiImplicitParams({

@@ -29,7 +29,6 @@ public class EstadoModelAssembler extends RepresentationModelAssemblerSupport<Es
 		return estadoModel;
 	}
 
-	
 	@Override
 	public CollectionModel<EstadoModel> toCollectionModel(Iterable<? extends Estado> entities) {
 		return super.toCollectionModel(entities)
