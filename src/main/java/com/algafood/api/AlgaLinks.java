@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.algafood.api.controller.CidadeController;
 import com.algafood.api.controller.CozinhaController;
 import com.algafood.api.controller.EstadoController;
+import com.algafood.api.controller.FluxoPedidoController;
 import com.algafood.api.controller.FormaPagamentoController;
 import com.algafood.api.controller.PedidoController;
 import com.algafood.api.controller.RestauranteController;
@@ -134,4 +135,20 @@ public class AlgaLinks {
 	public Link linkToCozinhas() {
 		return linkToCozinhas(IanaLinkRelations.SELF_VALUE);
 	}
+	
+	public Link linkToConfirmacaoPedido(String codigoPedido, String rel) {
+		return WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(FluxoPedidoController.class)
+				.confirmar(codigoPedido)).withRel(rel);
+	}
+	
+	public Link linkToEntregaPedido(String codigoPedido, String rel) {
+		return WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(FluxoPedidoController.class)
+				.entregar(codigoPedido)).withRel(rel);
+	}
+
+	public Link linkToCancelamentoPedido(String codigoPedido, String rel) {
+		return WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(FluxoPedidoController.class)
+				.cancelar(codigoPedido)).withRel(rel);
+	}
+	
 }

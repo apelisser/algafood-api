@@ -1,6 +1,7 @@
 package com.algafood.api.openapi.controller;
 
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 import com.algafood.api.exceptionhandler.Problem;
 
@@ -21,7 +22,7 @@ public interface FluxoPedidoControllerOpenApi {
 		@ApiResponse(responseCode = "404", description = "Pedido não encotrado", 
 				content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 	})
-	public void confirmar(
+	public ResponseEntity<Void> confirmar(
 			@Parameter(description = "Código de um pedido", example = "609abd53-913c-48a3-bd0a-ae95317facba", required = true)
 			String codigoPedido);
 
@@ -31,7 +32,7 @@ public interface FluxoPedidoControllerOpenApi {
 		@ApiResponse(responseCode = "404", description = "Pedido não encotrado", 
 		content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 	})
-	public void cancelar(
+	public ResponseEntity<Void>  cancelar(
 			@Parameter(description = "Código de um pedido", example = "609abd53-913c-48a3-bd0a-ae95317facba", required = true)
 			String codigoPedido);
 	
@@ -41,7 +42,7 @@ public interface FluxoPedidoControllerOpenApi {
 		@ApiResponse(responseCode = "404", description = "Pedido não encotrado", 
 		content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 	})
-	public void entregar(
+	public ResponseEntity<Void>  entregar(
 			@Parameter(description = "Código de um pedido", example = "609abd53-913c-48a3-bd0a-ae95317facba", required = true)
 			String codigoPedido);
 	
