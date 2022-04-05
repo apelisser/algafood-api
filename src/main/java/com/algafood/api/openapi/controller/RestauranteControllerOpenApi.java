@@ -2,7 +2,6 @@ package com.algafood.api.openapi.controller;
 
 import java.util.List;
 
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.MediaType;
 
 import com.algafood.api.exceptionhandler.Problem;
@@ -28,10 +27,10 @@ public interface RestauranteControllerOpenApi {
 		@ApiImplicitParam(value = "Nome da projeção de pedidos", name = "projecao", 
 				paramType = "query", dataTypeClass = String.class, allowableValues = "apenas-nome")
 	})
-	public CollectionModel<RestauranteModel> listar();
+	public List<RestauranteModel> listar();
 	
 	@Operation(summary = "Lista restaurantes", hidden = true)
-	public CollectionModel<RestauranteModel> listarApenasNomes();
+	public List<RestauranteModel> listarApenasNomes();
 
 	@Operation(summary = "Busca um restaurante por ID")
 	@ApiResponses({

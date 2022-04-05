@@ -2,7 +2,6 @@ package com.algafood.api.model;
 
 import java.math.BigDecimal;
 
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.algafood.api.model.view.RestauranteView;
@@ -15,7 +14,7 @@ import lombok.Setter;
 @Relation(collectionRelation = "restaurantes")
 @Setter
 @Getter
-public class RestauranteModel extends RepresentationModel<RestauranteModel> {
+public class RestauranteModel {
 
 	@ApiModelProperty(example = "1")
 	@JsonView({

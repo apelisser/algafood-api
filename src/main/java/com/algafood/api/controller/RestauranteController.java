@@ -5,7 +5,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -52,7 +51,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 	
 	@JsonView(RestauranteView.Resumo.class)
 	@GetMapping
-	public CollectionModel<RestauranteModel> listar() {
+	public List<RestauranteModel> listar() {
 		List<Restaurante> todosRestaurantes = restauranteRepository.findAll();
 		
 		return restauranteModelAssembler.toCollectionModel(todosRestaurantes);
@@ -60,7 +59,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 	
 	@JsonView(RestauranteView.ApenasNome.class)
 	@GetMapping(params = "projecao=apenas-nome")
-	public CollectionModel<RestauranteModel> listarApenasNomes() {
+	public List<RestauranteModel> listarApenasNomes() {
 		return listar();
 	}
 	
