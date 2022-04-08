@@ -123,6 +123,18 @@ public class Pedido extends AbstractAggregateRoot<Pedido>{
 		this.status = novoStatus;
 	}
 	
+	public boolean podeSerConfirmado() {
+		return getStatus().podeAlterarPara(StatusPedido.CONFIRMADO);
+	}
+	
+	public boolean podeSerEntregue() {
+		return getStatus().podeAlterarPara(StatusPedido.ENTREGUE);
+	}
+	
+	public boolean podeSerCancelado() {
+		return getStatus().podeAlterarPara(StatusPedido.CANCELADO);
+	}
+	
 	@PrePersist //método de callback JPA - é executado antes de persistir no banco
 	private void gerarCodigo() {
 		setCodigo(UUID.randomUUID().toString());
