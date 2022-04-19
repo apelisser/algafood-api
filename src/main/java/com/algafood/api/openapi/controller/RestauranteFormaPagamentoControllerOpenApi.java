@@ -1,7 +1,6 @@
 package com.algafood.api.openapi.controller;
 
-import java.util.List;
-
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.MediaType;
 
 import com.algafood.api.exceptionhandler.Problem;
@@ -23,7 +22,7 @@ public interface  RestauranteFormaPagamentoControllerOpenApi{
 		@ApiResponse(responseCode = "404", description = "Restaurante não encontrado",
 				content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 	})
-	public List<FormaPagamentoModel> listar(
+	public CollectionModel<FormaPagamentoModel> listar(
 			@Parameter(description = "ID de um restaurante", example = "1", required = true)
 			Long restauranteId);
 
