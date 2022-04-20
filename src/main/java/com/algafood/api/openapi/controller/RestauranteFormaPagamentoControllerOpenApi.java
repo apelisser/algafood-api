@@ -46,7 +46,7 @@ public interface  RestauranteFormaPagamentoControllerOpenApi{
 		@ApiResponse(responseCode = "404", description = "Restaurante ou forma de pagamento não encotrado", 
 				content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 	})
-	public void associar(
+	public ResponseEntity<Void> associar(
 			@Parameter(description = "ID de um restaurante", example = "1", required = true)
 			Long restauranteId, 
 			
