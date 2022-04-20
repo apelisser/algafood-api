@@ -2,6 +2,7 @@ package com.algafood.api.openapi.controller;
 
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 import com.algafood.api.exceptionhandler.Problem;
 import com.algafood.api.model.FormaPagamentoModel;
@@ -32,7 +33,7 @@ public interface  RestauranteFormaPagamentoControllerOpenApi{
 		@ApiResponse(responseCode = "404", description = "Restaurante ou forma de pagamento não encotrado", 
 				content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 	})
-	public void desassociar(
+	public ResponseEntity<Void> desassociar(
 			@Parameter(description = "ID de um restaurante", example = "1", required = true)
 			Long restauranteId, 
 			
