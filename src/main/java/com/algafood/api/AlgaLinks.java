@@ -96,6 +96,17 @@ public class AlgaLinks {
 				.associar(restauranteId, null)).withRel(rel);
 	}
 	
+	public Link linkToRestauranteResponsavelDesassociacao(
+			Long restauranteId, Long usuarioId, String rel) {
+		return WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(RestauranteUsuarioResponsavelController.class)
+				.desassociar(restauranteId, usuarioId)).withRel(rel);
+	}
+	
+	public Link linkToRestauranteResponsavelAssociacao(Long restauranteId, String rel) {
+		return WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(RestauranteUsuarioResponsavelController.class)
+				.associar(restauranteId, null)).withRel(rel);
+	}
+	
 	public Link linkToCliente(Long clienteId, String rel) {
 		return WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(UsuarioController.class)
 				.buscar(clienteId)).withRel(rel);
