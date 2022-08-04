@@ -1,7 +1,6 @@
 package com.algafood.api.openapi.controller;
 
-import java.util.List;
-
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.MediaType;
 
 import com.algafood.api.exceptionhandler.Problem;
@@ -26,8 +25,8 @@ public interface UsuarioGrupoControllerOpenApi {
 		@ApiResponse(responseCode = "404", description = "Usuário não encontrado",
 				content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 	})
-	public List<GrupoModel> listar(
-			@Parameter(description = "ID do usuário", example = "1")
+	public CollectionModel<GrupoModel> listar(
+			@Parameter(description = "ID do usuário", example = "1", required = true)
 			Long usuarioId);
 	
 	@Operation(summary = "Desassociação de usuário com grupo")
