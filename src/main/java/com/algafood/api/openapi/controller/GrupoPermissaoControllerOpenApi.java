@@ -1,8 +1,8 @@
 package com.algafood.api.openapi.controller;
 
-import java.util.List;
-
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 import com.algafood.api.exceptionhandler.Problem;
 import com.algafood.api.model.PermissaoModel;
@@ -25,8 +25,8 @@ public interface GrupoPermissaoControllerOpenApi {
 		@ApiResponse(responseCode = "404", description = "Grupo não encontrado",
 				content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 	})
-	public List<PermissaoModel> listar(
-			@Parameter(description = "ID do grupo", example = "1")
+	public CollectionModel<PermissaoModel> listar(
+			@Parameter(description = "ID do grupo", example = "1", required = true)
 			Long grupoId);
 	
 	@Operation(summary = "Associação de permissão com grupo")
@@ -35,7 +35,7 @@ public interface GrupoPermissaoControllerOpenApi {
 		@ApiResponse(responseCode = "404", description = "Grupo ou permissão não encontrada",
 				content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 	})
-	public void associar(
+	public ResponseEntity<Void> associar(
 			@Parameter(description = "ID do grupo", example = "1")
 			Long grupoId, 
 			
@@ -48,7 +48,7 @@ public interface GrupoPermissaoControllerOpenApi {
 		@ApiResponse(responseCode = "404", description = "Grupo ou permissão não encontrada",
 				content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 	})
-	public void desassociar(
+	public ResponseEntity<Void> desassociar(
 			@Parameter(description = "ID do grupo", example = "1")
 			Long grupoId, 
 			
