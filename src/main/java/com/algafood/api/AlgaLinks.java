@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.algafood.api.controller.CidadeController;
 import com.algafood.api.controller.CozinhaController;
 import com.algafood.api.controller.EstadoController;
+import com.algafood.api.controller.EstatisticasController;
 import com.algafood.api.controller.FluxoPedidoController;
 import com.algafood.api.controller.FormaPagamentoController;
 import com.algafood.api.controller.GrupoController;
@@ -37,6 +38,13 @@ public class AlgaLinks {
 	
 	public static final TemplateVariables PROJECAO_VARIABLES = new TemplateVariables(
 			new TemplateVariable("projecao", VariableType.REQUEST_PARAM));
+	
+	public static final TemplateVariables ESTATISTICAS_VARIABLES = new TemplateVariables(
+			new TemplateVariable("restauranteId", VariableType.REQUEST_PARAM),
+			new TemplateVariable("dataCriacaoInicio", VariableType.REQUEST_PARAM),
+			new TemplateVariable("dataCriacaoFim", VariableType.REQUEST_PARAM),
+			new TemplateVariable("timeOffSet", VariableType.REQUEST_PARAM));
+	
 	
 	
 	public Link linkToPedidos(String rel) {
@@ -328,5 +336,16 @@ public class AlgaLinks {
 	public Link linkToUsuarioGrupoDesassociacao(Long usuarioId, Long grupoId, String rel) {
 		return WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(UsuarioGrupoController.class)
 				.desassociar(usuarioId, grupoId)).withRel(rel);
+	}
+	
+	public Link linkToEstatisticas(String rel) {
+		return WebMvcLinkBuilder.linkTo(EstatisticasController.class).withRel(rel);
+	}
+	
+	public Link linkToEstatisticasVendasDiarias(String rel) {		
+		String pedidosUrl = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EstatisticasController.class)
+				.consultarVendasDiarias(null, null)).toUri().toString();
+		
+		return Link.of(UriTemplate.of(pedidosUrl, ESTATISTICAS_VARIABLES), rel);
 	}
 }
