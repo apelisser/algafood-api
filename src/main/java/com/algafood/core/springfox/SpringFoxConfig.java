@@ -1,5 +1,10 @@
 package com.algafood.core.springfox;
 
+import java.io.File;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLStreamHandler;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
@@ -7,8 +12,11 @@ import java.util.function.Consumer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.Links;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,9 +25,12 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.algafood.api.exceptionhandler.Problem;
+import com.algafood.api.model.CidadeModel;
 import com.algafood.api.model.CozinhaModel;
 import com.algafood.api.model.PedidoResumoModel;
+import com.algafood.api.openapi.model.CidadesModelOpenApi;
 import com.algafood.api.openapi.model.CozinhasModelOpenApi;
+import com.algafood.api.openapi.model.LinksModelOpenApi;
 import com.algafood.api.openapi.model.PageableModelOpenApi;
 import com.algafood.api.openapi.model.PedidosModelOpenApi;
 import com.fasterxml.classmate.TypeResolver;
@@ -77,15 +88,21 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 				.globalResponses(HttpMethod.PUT, globalPostPutResponseMessages())
 				.globalResponses(HttpMethod.DELETE, globalDeleteResponseMessages())
 				.additionalModels(typeResolver.resolve(Problem.class))
-				.ignoredParameterTypes(ServletWebRequest.class)
+				.ignoredParameterTypes(ServletWebRequest.class,
+						URL.class, URI.class, URLStreamHandler.class, Resource.class,
+						File.class, InputStream.class)
 				.directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
+				.directModelSubstitute(Links.class, LinksModelOpenApi.class)
 				.alternateTypeRules(AlternateTypeRules.newRule(
 						typeResolver.resolve(Page.class, CozinhaModel.class),
 						CozinhasModelOpenApi.class))
-				.apiInfo(apiInfo())
+//				.apiInfo(apiInfo())
 				.alternateTypeRules(AlternateTypeRules.newRule(
 						typeResolver.resolve(Page.class, PedidoResumoModel.class),
 						PedidosModelOpenApi.class))
+				.alternateTypeRules(AlternateTypeRules.newRule(typeResolver.resolve(
+						CollectionModel.class, CidadeModel.class), 
+						CidadesModelOpenApi.class))
 				.apiInfo(apiInfo())
 				.tags(tags()[0], tags());
 	}
