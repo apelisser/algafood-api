@@ -29,10 +29,12 @@ import com.algafood.api.exceptionhandler.Problem;
 import com.algafood.api.model.CidadeModel;
 import com.algafood.api.model.CozinhaModel;
 import com.algafood.api.model.EstadoModel;
+import com.algafood.api.model.FormaPagamentoModel;
 import com.algafood.api.model.PedidoResumoModel;
 import com.algafood.api.openapi.model.CidadesModelOpenApi;
 import com.algafood.api.openapi.model.CozinhasModelOpenApi;
 import com.algafood.api.openapi.model.EstadosModelOpenApi;
+import com.algafood.api.openapi.model.FormasPagamentoModelOpenApi;
 import com.algafood.api.openapi.model.LinksModelOpenApi;
 import com.algafood.api.openapi.model.PageableModelOpenApi;
 import com.algafood.api.openapi.model.PedidosModelOpenApi;
@@ -99,6 +101,9 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 				.alternateTypeRules(AlternateTypeRules.newRule(
 						typeResolver.resolve(CollectionModel.class, EstadoModel.class), 
 						EstadosModelOpenApi.class))
+				.alternateTypeRules(AlternateTypeRules.newRule(
+						typeResolver.resolve(CollectionModel.class, FormaPagamentoModel.class), 
+						FormasPagamentoModelOpenApi.class))
 				.alternateTypeRules(AlternateTypeRules.newRule(
 						typeResolver.resolve(PagedModel.class, CozinhaModel.class),
 						CozinhasModelOpenApi.class))

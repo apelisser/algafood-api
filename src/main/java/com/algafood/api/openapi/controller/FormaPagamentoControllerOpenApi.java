@@ -8,6 +8,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 import com.algafood.api.exceptionhandler.Problem;
 import com.algafood.api.model.FormaPagamentoModel;
 import com.algafood.api.model.input.FormaPagamentoInput;
+import com.algafood.api.openapi.model.FormasPagamentoModelOpenApi;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
@@ -21,11 +22,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @Api(tags = "Formas Pagamento")
 public interface FormaPagamentoControllerOpenApi {
 	
-	@Operation(summary = "Lista as formas de pagamento")
+	@Operation(summary = "Lista as formas de pagamento", responses = @ApiResponse(responseCode = "200"))
 	public ResponseEntity<CollectionModel<FormaPagamentoModel>> listar(ServletWebRequest request);
 	
 	@Operation(summary = "Busca uma forma de pagamento por ID")
 	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "Representação das formas de pagamento",
+				content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FormasPagamentoModelOpenApi.class))),
 		@ApiResponse(responseCode = "400", description = "ID da forma de pagamento, inválido",
 				content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Problem.class))),
 		@ApiResponse(responseCode = "404", description = "Forma de pagamento não encontrada",
