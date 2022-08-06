@@ -4,23 +4,23 @@ import java.util.List;
 
 import org.springframework.hateoas.Links;
 
-import com.algafood.api.model.CidadeModel;
+import com.algafood.api.model.EstadoModel;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 @ApiModel("CidadesModel")
 @Data
-public class CidadesModelOpenApi {
+public class EstadosModelOpenApi {
 
-	private CidadesEmbeddedModelOpenApi _embedded;
+	private EstadosEmbeddedModelOpenApi _embedded;
 	private Links _links;
 	
-	@ApiModel("CidadesEmbeddedModel")
+	@ApiModel("EstadosEmbeddedModel")
 	@Data
-	private class CidadesEmbeddedModelOpenApi {
+	private class EstadosEmbeddedModelOpenApi {
 		
-		private List<CidadeModel> cidades;
+		private List<EstadoModel> estados;
 		
 	}
 	

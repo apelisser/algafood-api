@@ -28,9 +28,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.algafood.api.exceptionhandler.Problem;
 import com.algafood.api.model.CidadeModel;
 import com.algafood.api.model.CozinhaModel;
+import com.algafood.api.model.EstadoModel;
 import com.algafood.api.model.PedidoResumoModel;
 import com.algafood.api.openapi.model.CidadesModelOpenApi;
 import com.algafood.api.openapi.model.CozinhasModelOpenApi;
+import com.algafood.api.openapi.model.EstadosModelOpenApi;
 import com.algafood.api.openapi.model.LinksModelOpenApi;
 import com.algafood.api.openapi.model.PageableModelOpenApi;
 import com.algafood.api.openapi.model.PedidosModelOpenApi;
@@ -95,13 +97,16 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 				.directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
 				.directModelSubstitute(Links.class, LinksModelOpenApi.class)
 				.alternateTypeRules(AlternateTypeRules.newRule(
+						typeResolver.resolve(CollectionModel.class, EstadoModel.class), 
+						EstadosModelOpenApi.class))
+				.alternateTypeRules(AlternateTypeRules.newRule(
 						typeResolver.resolve(PagedModel.class, CozinhaModel.class),
 						CozinhasModelOpenApi.class))
 				.alternateTypeRules(AlternateTypeRules.newRule(
 						typeResolver.resolve(Page.class, PedidoResumoModel.class),
 						PedidosModelOpenApi.class))
-				.alternateTypeRules(AlternateTypeRules.newRule(typeResolver.resolve(
-						CollectionModel.class, CidadeModel.class), 
+				.alternateTypeRules(AlternateTypeRules.newRule(
+						typeResolver.resolve(CollectionModel.class, CidadeModel.class), 
 						CidadesModelOpenApi.class))
 				.apiInfo(apiInfo())
 				.tags(tags()[0], tags());
