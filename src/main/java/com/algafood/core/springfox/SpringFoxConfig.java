@@ -33,6 +33,8 @@ import com.algafood.api.model.GrupoModel;
 import com.algafood.api.model.PedidoResumoModel;
 import com.algafood.api.model.PermissaoModel;
 import com.algafood.api.model.ProdutoModel;
+import com.algafood.api.model.RestauranteBasicoModel;
+import com.algafood.api.model.UsuarioModel;
 import com.algafood.api.openapi.model.CidadesModelOpenApi;
 import com.algafood.api.openapi.model.CozinhasModelOpenApi;
 import com.algafood.api.openapi.model.EstadosModelOpenApi;
@@ -43,6 +45,8 @@ import com.algafood.api.openapi.model.PageableModelOpenApi;
 import com.algafood.api.openapi.model.PedidosResumoModelOpenApi;
 import com.algafood.api.openapi.model.PermissoesModelOpenApi;
 import com.algafood.api.openapi.model.ProdutosModelOpenApi;
+import com.algafood.api.openapi.model.RestaurantesBasicoModelOpenApi;
+import com.algafood.api.openapi.model.UsuariosModelOpenApi;
 import com.fasterxml.classmate.TypeResolver;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -103,6 +107,12 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 						File.class, InputStream.class)
 				.directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
 				.directModelSubstitute(Links.class, LinksModelOpenApi.class)
+				.alternateTypeRules(AlternateTypeRules.newRule(
+						typeResolver.resolve(CollectionModel.class, RestauranteBasicoModel.class), 
+						RestaurantesBasicoModelOpenApi.class))
+				.alternateTypeRules(AlternateTypeRules.newRule(
+						typeResolver.resolve(CollectionModel.class, UsuarioModel.class), 
+						UsuariosModelOpenApi.class))
 				.alternateTypeRules(AlternateTypeRules.newRule(
 						typeResolver.resolve(CollectionModel.class, PermissaoModel.class), 
 						PermissoesModelOpenApi.class))
