@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.io.Resource;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Links;
@@ -33,6 +32,7 @@ import com.algafood.api.model.FormaPagamentoModel;
 import com.algafood.api.model.GrupoModel;
 import com.algafood.api.model.PedidoResumoModel;
 import com.algafood.api.model.PermissaoModel;
+import com.algafood.api.model.ProdutoModel;
 import com.algafood.api.openapi.model.CidadesModelOpenApi;
 import com.algafood.api.openapi.model.CozinhasModelOpenApi;
 import com.algafood.api.openapi.model.EstadosModelOpenApi;
@@ -42,6 +42,7 @@ import com.algafood.api.openapi.model.LinksModelOpenApi;
 import com.algafood.api.openapi.model.PageableModelOpenApi;
 import com.algafood.api.openapi.model.PedidosResumoModelOpenApi;
 import com.algafood.api.openapi.model.PermissoesModelOpenApi;
+import com.algafood.api.openapi.model.ProdutosModelOpenApi;
 import com.fasterxml.classmate.TypeResolver;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -114,6 +115,9 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 				.alternateTypeRules(AlternateTypeRules.newRule(
 						typeResolver.resolve(CollectionModel.class, FormaPagamentoModel.class), 
 						FormasPagamentoModelOpenApi.class))
+				.alternateTypeRules(AlternateTypeRules.newRule(
+						typeResolver.resolve(CollectionModel.class, ProdutoModel.class), 
+						ProdutosModelOpenApi.class))
 				.alternateTypeRules(AlternateTypeRules.newRule(
 						typeResolver.resolve(PagedModel.class, CozinhaModel.class),
 						CozinhasModelOpenApi.class))
