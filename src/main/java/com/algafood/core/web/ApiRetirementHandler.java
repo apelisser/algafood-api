@@ -23,11 +23,11 @@ public class ApiRetirementHandler implements HandlerInterceptor {
 //		}
 		
 		
-		// API desligada
-		if (request.getRequestURI().startsWith("/v1/")) {
-			response.setStatus(HttpStatus.GONE.value());
-			return false;
-		}
+//		API desligada
+//		if (request.getRequestURI().startsWith("/v1/")) {
+//			response.setStatus(HttpStatus.GONE.value());
+//			return false;
+//		}
 		
 		return true;
 	}
