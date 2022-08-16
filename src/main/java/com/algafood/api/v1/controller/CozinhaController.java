@@ -61,6 +61,9 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 		
 		log.info("Consultando cozinhas...");
 		
+		if (true) {
+			throw new RuntimeException("Erro gerado manualmente para testar os logs");
+		}
 		
 		Page<Cozinha> cozinhasPage = cozinhaRepository.findAll(pageable);
 		
