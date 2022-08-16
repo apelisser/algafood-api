@@ -3,10 +3,12 @@ package com.algafood.api.v2.model;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
+@ApiModel("CozinhaModel")
 @Relation(collectionRelation = "cozinhas")
 @Getter 
 @Setter

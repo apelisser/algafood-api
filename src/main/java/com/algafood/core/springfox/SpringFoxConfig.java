@@ -47,6 +47,10 @@ import com.algafood.api.v1.openapi.model.PermissoesModelOpenApi;
 import com.algafood.api.v1.openapi.model.ProdutosModelOpenApi;
 import com.algafood.api.v1.openapi.model.RestaurantesBasicoModelOpenApi;
 import com.algafood.api.v1.openapi.model.UsuariosModelOpenApi;
+import com.algafood.api.v2.model.CidadeModelV2;
+import com.algafood.api.v2.model.CozinhaModelV2;
+import com.algafood.api.v2.openapi.model.CidadesModelV2OpenApi;
+import com.algafood.api.v2.openapi.model.CozinhasModelV2OpenApi;
 import com.fasterxml.classmate.TypeResolver;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -85,16 +89,17 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 	}
 	
 	@Bean
-	public Docket apiDocket() {
+	public Docket apiDocketV1() {
 		// Acessar documentacao API
 		// http://localhost:8080/swagger-ui/index.html#/
 		
 		TypeResolver typeResolver = new TypeResolver();
 		
 		return new Docket(DocumentationType.OAS_30)
+				.groupName("V1")
 				.select()
 					.apis(RequestHandlerSelectors.basePackage("com.algafood.api"))
-					.paths(PathSelectors.any())
+					.paths(PathSelectors.ant("/v1/**"))
 					.build()
 				.useDefaultResponseMessages(false)
 				.globalResponses(HttpMethod.GET, globalGetResponseMessages())
@@ -137,8 +142,42 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 				.alternateTypeRules(AlternateTypeRules.newRule(
 						typeResolver.resolve(CollectionModel.class, CidadeModel.class), 
 						CidadesModelOpenApi.class))
-				.apiInfo(apiInfo())
-				.tags(tags()[0], tags());
+				.apiInfo(apiInfoV1())
+				.tags(tagsV1()[0], tagsV1());
+	}
+	
+	@Bean
+	public Docket apiDocketV2() {
+		// Acessar documentacao API
+		// http://localhost:8080/swagger-ui/index.html#/
+		
+		TypeResolver typeResolver = new TypeResolver();
+		
+		return new Docket(DocumentationType.OAS_30)
+				.groupName("V2")
+				.select()
+					.apis(RequestHandlerSelectors.basePackage("com.algafood.api"))
+					.paths(PathSelectors.ant("/v2/**"))
+					.build()
+				.useDefaultResponseMessages(false)
+				.globalResponses(HttpMethod.GET, globalGetResponseMessages())
+				.globalResponses(HttpMethod.POST, globalPostPutResponseMessages())
+				.globalResponses(HttpMethod.PUT, globalPostPutResponseMessages())
+				.globalResponses(HttpMethod.DELETE, globalDeleteResponseMessages())
+				.additionalModels(typeResolver.resolve(Problem.class))
+				.ignoredParameterTypes(ServletWebRequest.class,
+						URL.class, URI.class, URLStreamHandler.class, Resource.class,
+						File.class, InputStream.class)
+				.directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
+				.directModelSubstitute(Links.class, LinksModelOpenApi.class)
+				.alternateTypeRules(AlternateTypeRules.newRule(
+						typeResolver.resolve(CollectionModel.class, CidadeModelV2.class), 
+						CidadesModelV2OpenApi.class))
+				.alternateTypeRules(AlternateTypeRules.newRule(
+						typeResolver.resolve(PagedModel.class, CozinhaModelV2.class), 
+						CozinhasModelV2OpenApi.class))
+				.apiInfo(apiInfoV2())
+				.tags(tagsV2()[0], tagsV2());
 	}
 	
 	private List<Response> globalGetResponseMessages() {
@@ -200,11 +239,20 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 			  );
 	}
 	
-	private ApiInfo apiInfo() {
+	private ApiInfo apiInfoV1() {
 		return new ApiInfoBuilder()
 				.title("AlgaFood API :: Abner J Pelisser")
 				.description("Api desenvolvida no curso Especialista Spring Rest - AlgaWorks")
 				.version("1")
+				.contact(new Contact("Abner J Pelisser", "https://github.com/abnerjp", "abner.pelisser@gmail.com"))
+				.build();
+	}
+	
+	private ApiInfo apiInfoV2() {
+		return new ApiInfoBuilder()
+				.title("AlgaFood API :: Abner J Pelisser")
+				.description("Api desenvolvida no curso Especialista Spring Rest - AlgaWorks")
+				.version("2")
 				.contact(new Contact("Abner J Pelisser", "https://github.com/abnerjp", "abner.pelisser@gmail.com"))
 				.build();
 	}
@@ -215,7 +263,7 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 							q -> q.name("Problema").namespace("com.algafood.api.exceptionhandler")))));
 	}
 	
-	private Tag[] tags() {
+	private Tag[] tagsV1() {
 		return new Tag[] {
 			new Tag("Cidades", "Gerencia as cidades"),
 			new Tag("Grupos", "Gerencia os grupos de usuários"),
@@ -228,6 +276,13 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 			new Tag("Usuários", "Gerencia os usuários"),
 			new Tag("Estatísticas", "Estatísticas da AlgaFood"),
 			new Tag("Permissões", "Gerencia as permissões")
+		};
+	}
+	
+	private Tag[] tagsV2() {
+		return new Tag[] {
+			new Tag("Cidades", "Gerencia as cidades"),
+			new Tag("Cozinhas", "Gerencia as cozinhas")
 		};
 	}
 }
