@@ -88,7 +88,7 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 		return objectMapper -> objectMapper.registerModule(new JavaTimeModule());
 	}
 	
-	@Bean
+//	@Bean
 	public Docket apiDocketV1() {
 		// Acessar documentacao API
 		// http://localhost:8080/swagger-ui/index.html#/
