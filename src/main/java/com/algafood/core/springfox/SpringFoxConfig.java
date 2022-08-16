@@ -241,8 +241,9 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 	
 	private ApiInfo apiInfoV1() {
 		return new ApiInfoBuilder()
-				.title("AlgaFood API :: Abner J Pelisser")
-				.description("Api desenvolvida no curso Especialista Spring Rest - AlgaWorks")
+				.title("AlgaFood API - (Depreciada) :: Abner J Pelisser")
+				.description("Api desenvolvida no curso Especialista Spring Rest - AlgaWorks.<>br>"
+						+ "Essa API eást depreciada e deixará de existir a partir de <strong>dd/MM/aaaa</strong>")
 				.version("1")
 				.contact(new Contact("Abner J Pelisser", "https://github.com/abnerjp", "abner.pelisser@gmail.com"))
 				.build();
