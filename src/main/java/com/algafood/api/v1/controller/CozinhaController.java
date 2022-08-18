@@ -2,8 +2,6 @@ package com.algafood.api.v1.controller;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -58,13 +56,6 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 
 	@GetMapping
 	public PagedModel<CozinhaModel> listar(@PageableDefault(size = 10) Pageable pageable) {
-		
-		log.info("Consultando cozinhas...");
-		
-		if (true) {
-			throw new RuntimeException("Erro gerado manualmente para testar os logs");
-		}
-		
 		Page<Cozinha> cozinhasPage = cozinhaRepository.findAll(pageable);
 		
 		PagedModel<CozinhaModel> cozinhasPagedModel = pagedResourcesAssembler
