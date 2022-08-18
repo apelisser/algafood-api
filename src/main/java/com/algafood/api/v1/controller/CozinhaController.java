@@ -29,9 +29,7 @@ import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.repository.CozinhaRepository;
 import com.algafood.domain.service.CadastroCozinhaService;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RestController
 @RequestMapping(value = "/v1/cozinhas", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CozinhaController implements CozinhaControllerOpenApi {
