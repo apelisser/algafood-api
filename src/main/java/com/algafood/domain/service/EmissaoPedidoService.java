@@ -1,5 +1,7 @@
 package com.algafood.domain.service;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,13 +36,14 @@ public class EmissaoPedidoService {
 	@Autowired
 	private CadastroFormaPagamentoService cadastroFormaPagamento;
 	
-	
+//	@Transactional
 	public Pedido emitir(Pedido pedido) {
 		validarPedido(pedido);
 		validarItens(pedido);
 		
 		pedido.setTaxaFrete(pedido.getRestaurante().getTaxaFrete());
 		pedido.calcularValorTotal();
+		
 		
 		return pedidoRepository.save(pedido);
 	}

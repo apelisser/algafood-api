@@ -70,7 +70,7 @@ public class Pedido extends AbstractAggregateRoot<Pedido>{
 	private Usuario cliente;
 	
 	@Enumerated(EnumType.STRING)
-	private StatusPedido status = StatusPedido.ENTREGUE;
+	private StatusPedido status = StatusPedido.CRIADO;
 	
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
 	private List<ItemPedido> itens = new ArrayList<>();
