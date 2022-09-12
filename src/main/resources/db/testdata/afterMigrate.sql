@@ -84,10 +84,10 @@ insert into permissao (id, nome, descricao) values (17, 'GERAR_RELATORIOS', 'Per
 insert into restaurante_forma_pagamento (restaurante_id, forma_pagamento_id) values (1, 1), (1, 2), (1, 3), (2, 3), (3, 2), (3, 3);
 
 insert into usuario (id, nome, email, senha, data_cadastro) values
-(1, 'Abner J Pelisser', 'abner.pelisser@gmail.com', '$2a$12$EeLCriyXJjsqwFereyGUtu.1VQKBfG7/ITdCZJFL4VVCpt92pcC2e', utc_timestamp),
-(2, 'Maria Joaquina', 'abner_pelisser@hotmail.com', '$2a$12$EeLCriyXJjsqwFereyGUtu.1VQKBfG7/ITdCZJFL4VVCpt92pcC2e', utc_timestamp),
-(3, 'José Souza', 'jose.aux@algafood.com', '$2a$12$EeLCriyXJjsqwFereyGUtu.1VQKBfG7/ITdCZJFL4VVCpt92pcC2e', utc_timestamp),
-(4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '$2a$12$EeLCriyXJjsqwFereyGUtu.1VQKBfG7/ITdCZJFL4VVCpt92pcC2e', utc_timestamp);
+(1, 'Abner J Pelisser', 'abner.pelisser_gerente@gmail.com', '$2a$12$EeLCriyXJjsqwFereyGUtu.1VQKBfG7/ITdCZJFL4VVCpt92pcC2e', utc_timestamp),
+(2, 'Maria Joaquina', 'abner_pelisser_vendedor@hotmail.com', '$2a$12$EeLCriyXJjsqwFereyGUtu.1VQKBfG7/ITdCZJFL4VVCpt92pcC2e', utc_timestamp),
+(3, 'José Souza', 'jose_secretaria@algafood.com', '$2a$12$EeLCriyXJjsqwFereyGUtu.1VQKBfG7/ITdCZJFL4VVCpt92pcC2e', utc_timestamp),
+(4, 'Sebastião Martins', 'sebastiao_cadastrador@algafood.com', '$2a$12$EeLCriyXJjsqwFereyGUtu.1VQKBfG7/ITdCZJFL4VVCpt92pcC2e', utc_timestamp);
 
 insert into grupo (id, nome) values (1, 'Gerente'), (2, 'Vendedor'), (3, 'Secretária'), (4, 'Cadastrador');
 
@@ -111,7 +111,7 @@ select 3, id from permissao where nome like 'CONSULTAR_%';
 insert into grupo_permissao (grupo_id, permissao_id) 
 select 4, id from permissao where nome like '%_RESTAURANTES' or nome like '%_PRODUTOS';
 
-insert into usuario_grupo (usuario_id, grupo_id) values (1, 1), (1, 2), (2, 2);
+insert into usuario_grupo (usuario_id, grupo_id) values (1, 1), (1, 2), (2, 2), (3, 3), (4, 4);
 
 insert into usuario (id, nome, email, senha, data_cadastro) values (5, 'Manoel Lima', 'manoel.loja@gmail.com', '$2a$12$EeLCriyXJjsqwFereyGUtu.1VQKBfG7/ITdCZJFL4VVCpt92pcC2e', utc_timestamp);
 

@@ -1,9 +1,10 @@
 package com.algafood.domain.service;
 
-import javax.transaction.Transactional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.algafood.domain.exception.NegocioException;
 import com.algafood.domain.exception.PedidoNaoEncontradoException;
@@ -36,7 +37,7 @@ public class EmissaoPedidoService {
 	@Autowired
 	private CadastroFormaPagamentoService cadastroFormaPagamento;
 	
-//	@Transactional
+	@Transactional
 	public Pedido emitir(Pedido pedido) {
 		validarPedido(pedido);
 		validarItens(pedido);
