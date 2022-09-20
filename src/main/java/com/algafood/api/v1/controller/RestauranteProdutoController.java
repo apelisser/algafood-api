@@ -24,6 +24,7 @@ import com.algafood.api.v1.assembler.ProdutoModelAssembler;
 import com.algafood.api.v1.model.ProdutoModel;
 import com.algafood.api.v1.model.input.ProdutoInput;
 import com.algafood.api.v1.openapi.controller.RestauranteProdutoControllerOpenApi;
+import com.algafood.core.security.CheckSecurity;
 import com.algafood.domain.model.Produto;
 import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.repository.ProdutoRepository;
@@ -52,6 +53,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
 	@Autowired
 	private AlgaLinks algaLink;
 	
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@GetMapping
 	public CollectionModel<ProdutoModel> listar(@PathVariable Long restauranteId, 
 			@RequestParam(required = false, defaultValue = "false") Boolean incluirInativos) {
@@ -69,6 +71,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
 				.add(algaLink.linkToProdutos(restauranteId));
 	}
 	
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@GetMapping("/{produtoId}")
 	public ProdutoModel buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
 		Produto produto = cadastroProduto.buscarOuFalhar(restauranteId, produtoId);
@@ -76,6 +79,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
 		return produtoModelAssembler.toModel(produto);		
 	}
 	
+	@CheckSecurity.Restaurantes.PodeEditar
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ProdutoModel adicionar(@PathVariable Long restauranteId, 
@@ -91,6 +95,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
 		return produtoModelAssembler.toModel(produto);		
 	}
 	
+	@CheckSecurity.Restaurantes.PodeEditar
 	@PutMapping("/{produtoId}")
 	public ProdutoModel atualizar(@PathVariable Long restauranteId, 
 			@PathVariable Long produtoId, @RequestBody @Valid ProdutoInput protudoInput) {
