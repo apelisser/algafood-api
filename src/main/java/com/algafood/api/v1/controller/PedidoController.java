@@ -28,6 +28,7 @@ import com.algafood.api.v1.openapi.controller.PedidoControllerOpenApi;
 import com.algafood.core.data.PageWrapper;
 import com.algafood.core.data.PageableTranslator;
 import com.algafood.core.security.AlgaSecurity;
+import com.algafood.core.security.CheckSecurity;
 import com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algafood.domain.exception.NegocioException;
 import com.algafood.domain.filter.PedidoFilter;
@@ -80,6 +81,7 @@ public class PedidoController implements PedidoControllerOpenApi {
 		return pedidosPagedModel;
 	}
 	
+	@CheckSecurity.Pedidos.PodeBuscar
 	@GetMapping("/{codigoPedido}")
 	public PedidoModel buscar(@PathVariable String codigoPedido) {
 		Pedido pedido = emissaoPedido.buscarOuFalhar(codigoPedido);
