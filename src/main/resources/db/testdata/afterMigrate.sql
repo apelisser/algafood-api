@@ -69,7 +69,7 @@ insert into permissao (id, nome, descricao) values (3, 'EDITAR_CIDADES', 'Permit
 insert into permissao (id, nome, descricao) values (4, 'EDITAR_ESTADOS', 'Permite criar ou editar estados');
 insert into permissao (id, nome, descricao) values (5, 'CONSULTAR_USUARIOS', 'Permite consultar usuários');
 insert into permissao (id, nome, descricao) values (6, 'EDITAR_USUARIOS', 'Permite criar ou editar usuarios');
-insert into permissao (id, nome, descricao) values (7, 'EDITAR_RESTAURANTES', 'Permite cria, editar ou gerenciar restaurantes');
+insert into permissao (id, nome, descricao) values (7, 'EDITAR_RESTAURANTES', 'Permite criar, editar ou gerenciar restaurantes');
 insert into permissao (id, nome, descricao) values (8, 'CONSULTAR_PEDIDOS', 'Permite consultar pedidos');
 insert into permissao (id, nome, descricao) values (9, 'GERENCIAR_PEDIDOS', 'Permite gerenciar pedidos');
 insert into permissao (id, nome, descricao) values (10, 'GERAR_RELATORIOS', 'Permite gerar relatórios');
@@ -104,7 +104,9 @@ select 4, id from permissao where nome like '%_RESTAURANTES' or nome like '%_PRO
 
 insert into usuario_grupo (usuario_id, grupo_id) values (1, 1), (1, 2), (2, 2), (3, 3), (4, 4);
 
-insert into usuario (id, nome, email, senha, data_cadastro) values (5, 'Manoel Lima', 'manoel.loja@gmail.com', '$2a$12$EeLCriyXJjsqwFereyGUtu.1VQKBfG7/ITdCZJFL4VVCpt92pcC2e', utc_timestamp);
+insert into usuario (id, nome, email, senha, data_cadastro) values 
+(5, 'Manoel Lima', 'manoel.loja@gmail.com', '$2a$12$EeLCriyXJjsqwFereyGUtu.1VQKBfG7/ITdCZJFL4VVCpt92pcC2e', utc_timestamp),
+(6, 'Debora', 'debora_nada@algafood.com', '$2a$12$EeLCriyXJjsqwFereyGUtu.1VQKBfG7/ITdCZJFL4VVCpt92pcC2e', utc_timestamp);
 
 insert into restaurante_usuario_responsavel (restaurante_id, usuario_id) values (1, 5), (3, 5);
 
