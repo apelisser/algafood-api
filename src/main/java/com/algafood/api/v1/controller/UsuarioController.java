@@ -77,6 +77,7 @@ public class UsuarioController implements UsuarioControllerOpenApi {
 		return usuarioModelAssembler.toModel(cadastroUsuario.salvar(usuarioAtual));
 	}
 
+	@CheckSecurity.UsuarioGruposPermissoes.PodeAlterarUsuario
 	@DeleteMapping("/{usuarioId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long usuarioId) {
