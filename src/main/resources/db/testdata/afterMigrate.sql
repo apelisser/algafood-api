@@ -15,6 +15,7 @@ delete from restaurante_usuario_responsavel;
 delete from pedido;
 delete from item_pedido;
 delete from foto_produto;
+delete from oauth_client_details;
 set foreign_key_checks = 1;
 
 alter table cidade auto_increment = 1;
@@ -123,3 +124,40 @@ insert into pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pagame
 values (2, '8bba9df7-cdca-4fa5-94b3-98f27875f9ec', 4, 2, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro', 'CRIADO', utc_timestamp, 79, 0, 79);
 
 insert into item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao) values (3, 2, 3, 1, 79, 79, 'Ao ponto');
+
+
+insert into oauth_client_details (
+  client_id, resource_ids, client_secret, 
+  scope, authorized_grant_types, web_server_redirect_uri, authorities,
+  access_token_validity, refresh_token_validity, autoapprove
+)
+values (
+  'algafood-web', null, '$2y$12$w3igMjsfS5XoAYuowoH3C.54vRFWlcXSHLjX7MwF990Kc2KKKh72e',
+  'READ,WRITE', 'password', null, null,
+  60 * 60 * 6, 60 * 24 * 60 * 60, null
+);
+
+insert into oauth_client_details (
+  client_id, resource_ids, client_secret, 
+  scope, authorized_grant_types, web_server_redirect_uri, authorities,
+  access_token_validity, refresh_token_validity, autoapprove
+)
+values (
+  'foodanalytics', null, '$2y$12$fahbH37S2pyk1RPuIHKP.earzFmgAJJGo26rE.59vf4wwiiTKHnzO',
+  'READ,WRITE', 'authorization_code', 'http://www.foodanalytics.local:8082', null,
+  null, null, null
+);
+
+insert into oauth_client_details (
+  client_id, resource_ids, client_secret, 
+  scope, authorized_grant_types, web_server_redirect_uri, authorities,
+  access_token_validity, refresh_token_validity, autoapprove
+)
+values (
+  'faturamento', null, '$2y$12$fHixriC7yXX/i1/CmpnGH.RFyK/l5YapLCFOEbIktONjE8ZDykSnu',
+  'READ,WRITE', 'client_credentials', null, 'CONSULTAR_PEDIDOS,GERAR_RELATORIOS',
+  null, null, null
+);
+
+
+
