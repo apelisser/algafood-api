@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.algafood.api.v1.AlgaLinks;
 import com.algafood.api.v1.model.PermissaoModel;
+import com.algafood.core.security.AlgaSecurity;
 import com.algafood.domain.model.Permissao;
 
 @Component
@@ -19,11 +20,18 @@ public class PermissaoModelAssembler implements RepresentationModelAssembler<Per
 	@Autowired
 	private AlgaLinks algaLinks;
 	
+	@Autowired
+	private AlgaSecurity algaSecurity;
 	
 	@Override
 	public CollectionModel<PermissaoModel> toCollectionModel(Iterable<? extends Permissao> entities) {
-		return RepresentationModelAssembler.super.toCollectionModel(entities)
-				.add(algaLinks.linkToPermissoes());
+		CollectionModel<PermissaoModel> collectionModel = RepresentationModelAssembler.super.toCollectionModel(entities);
+		
+		if (algaSecurity.podeConsultarUsuarioGruposPermissoes()) {
+			collectionModel.add(algaLinks.linkToPermissoes());
+		}
+		
+		return collectionModel;
 	}
 	
 	@Override

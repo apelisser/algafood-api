@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.algafood.api.v1.AlgaLinks;
 import com.algafood.api.v1.controller.RestauranteProdutoController;
 import com.algafood.api.v1.model.ProdutoModel;
+import com.algafood.core.security.AlgaSecurity;
 import com.algafood.domain.model.Produto;
 
 @Component
@@ -19,20 +20,23 @@ public class ProdutoModelAssembler extends RepresentationModelAssemblerSupport<P
 	@Autowired
 	private AlgaLinks algaLinks;
 	
+	@Autowired
+	private AlgaSecurity algaSecurity;
+	
 	public ProdutoModelAssembler() {
 		super(RestauranteProdutoController.class, ProdutoModel.class);
 	}
-	
-	
+		
 	public ProdutoModel toModel(Produto produto) {
 		ProdutoModel produtoModel = createModelWithId(produto.getId(), produto, produto.getRestaurante().getId());
 		
 		modelMapper.map(produto, produtoModel);
 		
-		produtoModel.add(algaLinks.linkToProdutos(produto.getRestaurante().getId(), "produtos"));
-		
-		produtoModel.add(algaLinks.linkToFotoProduto(
-				produto.getRestaurante().getId(), produto.getId(), "foto"));
+		if (algaSecurity.podeConsultarRestaurantes()) {
+			produtoModel.add(algaLinks.linkToProdutos(produto.getRestaurante().getId(), "produtos"));
+			produtoModel.add(algaLinks.linkToFotoProduto(
+					produto.getRestaurante().getId(), produto.getId(), "foto"));
+		}
 		
 		return produtoModel;
 	}

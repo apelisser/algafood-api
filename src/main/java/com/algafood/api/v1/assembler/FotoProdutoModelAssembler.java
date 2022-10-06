@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.algafood.api.v1.AlgaLinks;
 import com.algafood.api.v1.controller.RestauranteProdutoFotoController;
 import com.algafood.api.v1.model.FotoProdutoModel;
+import com.algafood.core.security.AlgaSecurity;
 import com.algafood.domain.model.FotoProduto;
 
 @Component
@@ -19,6 +20,9 @@ public class FotoProdutoModelAssembler extends RepresentationModelAssemblerSuppo
 	@Autowired
 	private AlgaLinks algaLinks;
 	
+	@Autowired
+	private AlgaSecurity algaSecurity;
+	
 	
 	public FotoProdutoModelAssembler() {
 		super(RestauranteProdutoFotoController.class, FotoProdutoModel.class);
@@ -27,11 +31,14 @@ public class FotoProdutoModelAssembler extends RepresentationModelAssemblerSuppo
 	public FotoProdutoModel toModel(FotoProduto foto) {
 		FotoProdutoModel fotoProdutoModel = modelMapper.map(foto, FotoProdutoModel.class);
 		
-		fotoProdutoModel.add(algaLinks.linkToFotoProduto(
-				foto.getRestauranteId(), foto.getProduto().getId()));
-		
-		fotoProdutoModel.add(algaLinks.linkToRestauranteProduto(
-				foto.getRestauranteId(), foto.getProduto().getId(), "produto"));
+		// Quem pode consultar restaurantes, também pode consultar os produtos e fotos
+		if (algaSecurity.podeConsultarRestaurantes()) {
+			fotoProdutoModel.add(algaLinks.linkToFotoProduto(
+					foto.getRestauranteId(), foto.getProduto().getId()));
+			
+			fotoProdutoModel.add(algaLinks.linkToRestauranteProduto(
+					foto.getRestauranteId(), foto.getProduto().getId(), "produto"));
+		}
 		
 		return fotoProdutoModel;
 	}

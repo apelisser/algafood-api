@@ -17,6 +17,7 @@ import com.algafood.api.v1.AlgaLinks;
 import com.algafood.api.v1.assembler.UsuarioModelAssembler;
 import com.algafood.api.v1.model.UsuarioModel;
 import com.algafood.api.v1.openapi.controller.RestauranteUsuarioResponsavelControllerOpenApi;
+import com.algafood.core.security.AlgaSecurity;
 import com.algafood.core.security.CheckSecurity;
 import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.service.CadastroRestauranteService;
@@ -34,20 +35,28 @@ public class RestauranteUsuarioResponsavelController implements RestauranteUsuar
 	@Autowired
 	private AlgaLinks algaLinks;
 	
+	@Autowired
+	private AlgaSecurity algaSecurity;
+	
 	@CheckSecurity.Restaurantes.PodeConsultar
 	@GetMapping
 	public CollectionModel<UsuarioModel> listar(@PathVariable Long restauranteId) {
 		Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(restauranteId);
 		
-		CollectionModel<UsuarioModel> usuariosResponsaveisModel = usuarioModelAssembler.toCollectionModel(restaurante.getResponsaveis())
-				.removeLinks()
-				.add(algaLinks.linkToResponsaveisRestaurante(restauranteId))
-				.add(algaLinks.linkToRestauranteResponsavelAssociacao(restauranteId, "associar"));
+		CollectionModel<UsuarioModel> usuariosResponsaveisModel = 
+				usuarioModelAssembler.toCollectionModel(restaurante.getResponsaveis())
+				.removeLinks();
+				
+		usuariosResponsaveisModel.add(algaLinks.linkToResponsaveisRestaurante(restauranteId));
 		
-		usuariosResponsaveisModel.getContent().forEach(usuarioResponsavelModel -> {
-			usuarioResponsavelModel.add(algaLinks.linkToRestauranteResponsavelDesassociacao(
-					restaurante.getId(), usuarioResponsavelModel.getId(), "desassociar"));
-		});
+		if (algaSecurity.podeGerenciarCadastroRestaurantes()) {
+			usuariosResponsaveisModel.add(algaLinks.linkToRestauranteResponsavelAssociacao(restauranteId, "associar"));
+			
+			usuariosResponsaveisModel.getContent().forEach(usuarioResponsavelModel -> {
+				usuarioResponsavelModel.add(algaLinks.linkToRestauranteResponsavelDesassociacao(
+						restaurante.getId(), usuarioResponsavelModel.getId(), "desassociar"));
+			});
+		}
 		
 		return usuariosResponsaveisModel;
 	}
