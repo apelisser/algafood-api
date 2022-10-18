@@ -20,6 +20,7 @@ import org.springframework.security.oauth2.provider.CompositeTokenGranter;
 import org.springframework.security.oauth2.provider.TokenGranter;
 import org.springframework.security.oauth2.provider.approval.ApprovalStore;
 import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
+import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
@@ -70,10 +71,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		endpoints
 			.authenticationManager(authenticationManager)
 			.userDetailsService(userDetailService)
+			.authorizationCodeServices(new JdbcAuthorizationCodeServices(this.dataSource))
 			.reuseRefreshTokens(false)
 			.accessTokenConverter(jwtAccessTokenConverter())
 			.tokenEnhancer(enhancerChain)
-			.approvalStore(approvalStore(endpoints.getTokenStore())) // deve ser chamado apos o accessTokenConverver
+			.approvalStore(approvalStore(endpoints.getTokenStore())) // deve ser chamado apos o accessTokenConverter
 			.tokenGranter(tokenGranter(endpoints));
 	}
 	
