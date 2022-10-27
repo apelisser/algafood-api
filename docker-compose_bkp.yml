@@ -9,7 +9,7 @@ services:
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:
-      - "3606:3306"
+      - "13606:3306"
     networks:
       - algafood-network
   
@@ -26,6 +26,7 @@ services:
       SPRING_SESSION_STORE_TYPE: redis
       SPRING_REDIS_HOST: algafood-redis
       SPRING_REDIS_PORT: 6379
+      SPRING_PROFILES_ACTIVE: development
       EMAIL: abner.pelisser@gmail.com
       SENHA_EMAIL: senha_email_aqui
       EMAIL_REMETENTE: abner.pelisser@gmail.com
