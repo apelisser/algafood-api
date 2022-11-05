@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 
 import com.algafood.core.validation.TaxaFrete;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,11 +15,9 @@ import lombok.Setter;
 @Setter
 public class RestauranteInput {
 	
-	@ApiModelProperty(example = "Restaurante Forno a Lenha")
 	@NotBlank
 	private String nome;
 	
-	@ApiModelProperty(example = "7.50")
 	@NotNull
 	@TaxaFrete
 	private BigDecimal taxaFrete;
