@@ -5,6 +5,9 @@ import org.springframework.hateoas.CollectionModel;
 import com.algafood.api.v1.model.CidadeModel;
 import com.algafood.api.v1.model.input.CidadeInput;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
+@SecurityRequirement(name = "security_auth")
 public interface CidadeControllerOpenApi {
 
 	public CollectionModel<CidadeModel> listar();

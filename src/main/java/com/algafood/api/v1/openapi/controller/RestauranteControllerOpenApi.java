@@ -10,6 +10,9 @@ import com.algafood.api.v1.model.RestauranteBasicoModel;
 import com.algafood.api.v1.model.RestauranteModel;
 import com.algafood.api.v1.model.input.RestauranteInput;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
+@SecurityRequirement(name = "security_auth")
 public interface RestauranteControllerOpenApi {
 
 	public CollectionModel<RestauranteBasicoModel> listar();

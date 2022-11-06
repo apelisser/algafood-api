@@ -5,6 +5,9 @@ import org.springframework.hateoas.CollectionModel;
 import com.algafood.api.v1.model.EstadoModel;
 import com.algafood.api.v1.model.input.EstadoInput;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
+@SecurityRequirement(name = "security_auth")
 public interface EstadoControllerOpenApi {
 
 	public CollectionModel<EstadoModel> listar();

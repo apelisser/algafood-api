@@ -5,6 +5,9 @@ import org.springframework.hateoas.CollectionModel;
 import com.algafood.api.v1.model.GrupoModel;
 import com.algafood.api.v1.model.input.GrupoInput;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
+@SecurityRequirement(name = "security_auth")
 public interface GrupoControllerOpenApi {
 
 	public CollectionModel<GrupoModel> listar();
