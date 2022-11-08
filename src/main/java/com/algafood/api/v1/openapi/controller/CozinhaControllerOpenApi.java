@@ -5,13 +5,18 @@ import org.springframework.hateoas.PagedModel;
 
 import com.algafood.api.v1.model.CozinhaModel;
 import com.algafood.api.v1.model.input.CozinhaInput;
+import com.algafood.core.springdoc.PageableParameter;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @SecurityRequirement(name = "security_auth")
 public interface CozinhaControllerOpenApi {
 
-	public PagedModel<CozinhaModel> listar(Pageable pageable);
+	@PageableParameter
+	public PagedModel<CozinhaModel> listar(
+			@Parameter(hidden = true)
+			Pageable pageable);
 	
 	public CozinhaModel buscar(Long cozinhaId);
 
