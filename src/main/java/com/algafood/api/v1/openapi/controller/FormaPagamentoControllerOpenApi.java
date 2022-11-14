@@ -38,8 +38,8 @@ public interface FormaPagamentoControllerOpenApi {
 			@Parameter(hidden = true)
 			ServletWebRequest request);
 
-	@Operation(summary = "Cadastra uma forma de pagamento", 
-			description = "Cadastro de uma forma de pagamento, necessita de uma descrição válida")
+	@Operation(summary = "Cadastra uma forma de pagamento", responses = {
+			@ApiResponse(responseCode = "201", description = "Forma de pagamento cadastrada")})
 	public FormaPagamentoModel adicionar(
 			@RequestBody(description = "Representação de uma nova forma de pagamento", required = true)
 			FormaPagamentoInput formaPagamentoInput);

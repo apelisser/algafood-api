@@ -34,8 +34,7 @@ public interface GrupoControllerOpenApi {
 			@Parameter(description = "ID de um grupo", example = "1", required = true)
 			Long grupoId);
 
-	@Operation(summary = "Cadastra um grupo", 
-			description = "Cadastro de um grupo, necessita de um nome válido")
+	@Operation(summary = "Cadastra um grupo")
 	public GrupoModel adicionar(
 			@RequestBody(description = "Representação de um novo grupo", required = true)
 			GrupoInput grupoInput);

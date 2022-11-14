@@ -39,8 +39,9 @@ public interface CozinhaControllerOpenApi {
 			@Parameter(description = "ID de uma cozinha", example = "1", required = true)
 			Long cozinhaId);
 
-	@Operation(summary = "Cadastra uma cozinha", 
-			description = "Cadastro de uma cozinha, necessita de um nome válido")
+	@Operation(summary = "Cadastra uma cozinha", responses = {
+			@ApiResponse(responseCode = "201", description = "Cozinha cadastrada"),
+	})
 	public CozinhaModel adicionar(
 			@RequestBody(description = "Representação de uma nova cozinha", required = true)
 			CozinhaInput cozinhaInput);
