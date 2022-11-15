@@ -34,8 +34,9 @@ public interface CidadeControllerOpenApi {
 			@Parameter(description = "ID de uma cidade", example = "1", required = true)
 			Long cidadeId);
 	
-	@Operation(summary = "Cadastra uma cidade", 
-			description = "Cadastro de uma cidade, necessita de um estado e um nome válido")
+	@Operation(summary = "Cadastra uma cidade", responses = {
+			@ApiResponse(responseCode = "201", description = "Cidade cadastrada"),
+	})
 	public CidadeModel adicionar(
 			@RequestBody(description = "Representação de uma nova cidade", required = true)
 			CidadeInput cidadeInput);
