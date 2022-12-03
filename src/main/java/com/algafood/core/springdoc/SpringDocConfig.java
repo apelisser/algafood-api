@@ -114,7 +114,8 @@ public class SpringDocConfig {
 				new Tag().name("Estados").description("Gerencia os estados"),
 				new Tag().name("Restaurantes").description("Gerencia os restaurantes"),
 				new Tag().name("Formas de pagamento").description("Gerencia as formas de pagamento"),
-				new Tag().name("Produtos").description("Gerencia os produtos")
+				new Tag().name("Produtos").description("Gerencia os produtos"),
+				new Tag().name("Usuários").description("Gerencia os usuários")
 			);
 	}
 	
