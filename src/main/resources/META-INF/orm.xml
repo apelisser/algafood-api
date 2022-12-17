@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+foi necessário remover um parametro dessa, para que o projeto fosse executado sem erro 
 <entity-mappings
 	xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
 	xmlns:xsi="http://www/w3.org/2001/XMLSchema-instance"
-	xsi.schemaLocation="http://xmlns.jcp.org/xml/ns/percistence http://xmlns.jcp.org/xml/ns/percistence/orm_2_2.xsd"
+	xsi.schemaLocation="http://xmlns.jcp.org/xml/ns/percistence http://xmlns.jcp.org/xml/ns/percistence/orm_2_2.xsd" 
+	version="2.2">
+-->
+
+<entity-mappings
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+	xmlns:xsi="http://www/w3.org/2001/XMLSchema-instance"
 	version="2.2">
 
 	<named-query name="Restaurante.consultarPorNome">
